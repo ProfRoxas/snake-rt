@@ -54,4 +54,9 @@ public class TableMap {
         __field[p.x][p.y] = e;
         return true;
     }
+    public Entity remove(Point p) {
+        entity r = __field[p.x][p.y];
+        __field[p.x][p.y] = null;
+        return r;
+    }
 }
