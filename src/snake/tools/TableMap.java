@@ -29,7 +29,7 @@ public class TableMap {
         __random = new Random(rs);
         __x = mx;
         __y = mx;
-        __field = new entity[x][y];
+        __field = new Entity[__x][__y];
 
         __container = new LinkedList<>();
     }
@@ -68,7 +68,7 @@ public class TableMap {
      * @return The entity that occupied the tile
      */
     public Entity remove(Point p) {
-        entity r = __field[p.x][p.y];
+        Entity r = __field[p.x][p.y];
         __container.remove(r);
         __field[p.x][p.y] = null;
         return r;
@@ -85,7 +85,7 @@ public class TableMap {
      */
     public boolean spawnEntity(Entity e) {
         /* A buffer to prevent pseudo infinite loop for the last free tiles */
-        int lastBuffer = 5;
+        int lastBuffer = 5; int rx,ry;
         if(__container.size() > ((__x*__y)-5)) return false;
         do {
             rx = __random.nextInt(__x);
