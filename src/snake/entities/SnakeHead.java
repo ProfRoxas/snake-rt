@@ -1,35 +1,29 @@
 package snake.entities;
 
 import java.util.Deque;
-import java.util.Queue;
+import java.util.LinkedList;
 import snake.tools.SnakePoint;
 import snake.enums.Direction;
 import snake.entities.SnakeBody;
 
-public class SnakeHead {
+public class SnakeHead implements Entity {
     private SnakePoint position;
-    private Queue body;
-
-
-    public SnakeHead(int x, int y, int worldX, int worldY) {
-        position = new SnakePoint(x, y, worldX, worldY);
-        body = new Deque<SnakeBody>();
-
-        for(int i = 1; i < 4; i++) {
-            body.add(new SnakeBody(x-i, y, "body"));
-        }
-    }
+    private Deque body;
 
     public SnakeHead(int x, int y, int worldX, int worldY, int bodyLength) {
         position = new SnakePoint(x, y, worldX, worldY);
-        body = new Deque<SnakeBody>();
+        body = new LinkedList<SnakeBody>();
 
         for(int i = 1; i < bodyLength; i++) {
             body.add(new SnakeBody(x-i, y, "body"));
         }
     }
 
-    public void move(Direction dir) {
+    public SnakeHead(int x, int y, int worldX, int worldY) {
+        this(x, y, worldX, worldY, 3);
+    }
+
+	public void move(Direction dir) {
 		if(dir.equals(Direction.valueOf("UP"))) {
 			position.translate(-1, 0);
 		}
@@ -42,5 +36,14 @@ public class SnakeHead {
 		if(dir.equals(Direction.valueOf("LEFT"))) {
 			position.translate(0, -1);
 		}
-	}
+    }
+
+    public void tick() {
+
+    }
+    
+    @Override
+    public String toString() {
+           return "Head";
+    }
 }
