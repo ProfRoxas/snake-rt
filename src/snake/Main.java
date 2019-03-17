@@ -44,7 +44,6 @@ class Main extends JFrame {
                 lasttime = newtime;
 
                 //TODO: Update GameLogic
-                __canvas.repaint();
             }
         };
         __timer.schedule( __timertask, 0, 1000/__fps);

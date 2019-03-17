@@ -21,11 +21,10 @@ public class TableMap {
      * 
      * @param mx Maximum X, the width
      * @param my Maximum Y, the height
-     * @param ss Snake Size, the initial size of the Snake
      * @param wc Wall Count, the initial count of walls
      * @param rs Random Seed, the seed for the random generator
      */
-    public TableMap(int mx, int my, int ss, int wc, long rs) {
+    public TableMap(int mx, int my, int wc, long rs) {
         __random = new Random(rs);
         __x = mx;
         __y = mx;
