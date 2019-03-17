@@ -2,20 +2,23 @@ package snake.tools;
 
 import snake.entities.SnakeHead;
 import snake.enums.Direction;
+import javax.swing.JFrame;
+import java.awt.*;
 
 public class Logic{
 
     private SnakeHead snakeHead;
     private Direction nextDirection = Direction.UP;
     private boolean status = false;
-    //TODO: Visual component
+    private JFrame visual;
     
-    public Logic(/*Visual*/){
-        //TODO: get visual component and save it
+    public Logic(JFrame visual){
+        this.visual = visual;
     }
 
-    public void /*SnakeHead*/ generateSnakeHead(){
-        //TODO: snakeHead = new SnakeHead(visual.x/2, visual.y/2, visual.x, visual.y);
+    public SnakeHead generateSnakeHead(){
+    	Dimension size = visual.getContentPane().getSize();
+    	snakeHead = new SnakeHead(size.getWidth()/2, size.getHeight()/2, size.getWidth(), size.getWidth());
     }
 
     public SnakeHead getSnakeHead(){

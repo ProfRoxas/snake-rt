@@ -24,7 +24,7 @@ class Main extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        __gameLogic = new Logic();
+        __gameLogic = new Logic(this);
         addKeyListener(new KeyEventListener(/* passing gameLogic later*/));
     }
 
