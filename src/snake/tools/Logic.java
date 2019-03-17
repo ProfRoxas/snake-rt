@@ -17,8 +17,7 @@ public class Logic{
     }
 
     public SnakeHead generateSnakeHead(){
-    	Dimension size = visual.getContentPane().getSize();
-    	snakeHead = new SnakeHead(size.getWidth()/2, size.getHeight()/2, size.getWidth(), size.getWidth());
+    	snakeHead = new SnakeHead(0,0,0,0);
     }
 
     public SnakeHead getSnakeHead(){
