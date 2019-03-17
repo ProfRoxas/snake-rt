@@ -16,7 +16,7 @@ public class Logic{
         this.visual = visual;
     }
 
-    public SnakeHead generateSnakeHead(){
+    public void generateSnakeHead(){
     	snakeHead = new SnakeHead(0,0,0,0);
     }
 
