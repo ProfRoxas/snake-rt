@@ -17,11 +17,6 @@ public class Fruit implements Entity {
     }
 
     @Override
-    public void collidesWith(Entity e) {
-
-    }
-
-    @Override
     public String toString() {
         return __type.toString();
     }
