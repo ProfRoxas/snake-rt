@@ -16,8 +16,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <src.dir>./</src.dir>
-    <test.dir>./src.test.java/</test.dir>
   </properties>
 
   <dependencies>
@@ -30,11 +28,11 @@
   </dependencies>
 
   <build>
-    <sourceDirectory>${src.dir}</sourceDirectory>
-    <testSourceDirectory>${test.dir}</testSourceDirectory>
+    <sourceDirectory>src</sourceDirectory>
+    <testSourceDirectory>test/java</testSourceDirectory>
     <resources>
 			<resource>
-				<directory>src/snake/assets</directory>
+				<directory>assets</directory>
 			</resource>
 		</resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
