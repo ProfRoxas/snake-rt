@@ -46,7 +46,7 @@ class Main extends JFrame {
                 //TODO: Update GameLogic
             }
         };
-        __timer.schedule( __timertask, 0, 1000/__fps);
+        __timer.scheduleAtFixedRate( __timertask, 0, 1000/__fps);
     }
 
     public static void main(String[] args) {
