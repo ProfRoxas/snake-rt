@@ -11,6 +11,14 @@ public class SnakeBody implements Entity {
         this.visual = visual;
     }
 
+    public String getVisual() {
+        return visual;
+    }
+
+    public void setVisual(String visual) {
+        this.visual = visual;
+    }
+
     public void tick() {
 
     }
