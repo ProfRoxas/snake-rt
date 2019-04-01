@@ -1,0 +1,68 @@
+package snake;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.awt.Point;
+
+import org.junit.Test;
+
+import snake.entities.Entity;
+import snake.entities.Wall;
+import snake.tools.TableMap;
+
+/**
+ * Unit test for simple App.
+ */
+public class MapTest 
+{
+    private TableMap tm;
+    private void setup() {
+        tm = new TableMap(5, 6, 4, 0);
+    }
+    /**
+     * Tests Spawn and if there are 4 walls witht he seed
+     */
+    @Test
+    public void New5x6Map4Wall(){
+        setup();
+        Point w1 = new Point(0,4);
+        Point w2 = new Point(0,5);
+        Point w3 = new Point(1,3);
+        Point w4 = new Point(4,5);
+
+        assertNotEquals("Wall is not at it's place", null, tm.get(w1));
+        assertNotEquals("Wall is not at it's place", null, tm.get(w2));
+        assertNotEquals("Wall is not at it's place", null, tm.get(w3));
+        assertNotEquals("Wall is not at it's place", null, tm.get(w4));
+    }
+    /**
+     * Tests if the map can wrap around
+     * Test map is 5x6, starting from 0, so possible values for
+     * x is 0 -> 4
+     * y is 0 -> 5
+     * 
+     */
+    @Test
+    public void WrappedBoundaries() {
+        setup();
+        Point p = new Point(6,6);
+        Point pe = new Point(1,0);
+        try {
+            tm.get(p);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            assertFalse("Cant access out of bounds", true);
+        }
+        // 6 mod X(5) = 1
+        // 6 mod Y(6) = 0
+        Boolean b = null;
+        if(tm.get(p) == null)
+            b = tm.place(new Wall(pe));
+        Entity e = tm.get(p);
+        p = e.getLocation();
+        assertTrue("Found different entity outside of boudaries", tm.get(p).getLocation() == pe);
+        
+    }
+}
