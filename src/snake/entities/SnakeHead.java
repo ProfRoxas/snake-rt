@@ -79,6 +79,6 @@ public class SnakeHead implements Entity {
     
     @Override
     public EntityTypes getType() {
-        return EntityTypes.SnakeHead;
+        return EntityTypes.SNAKEHEAD;
     }
 }

@@ -27,6 +27,6 @@ public class Wall implements Entity {
     
     @Override
     public EntityTypes getType() {
-        return EntityTypes.Wall;
+        return EntityTypes.WALL;
     }
 }

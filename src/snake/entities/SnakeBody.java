@@ -34,6 +34,6 @@ public class SnakeBody implements Entity {
     
     @Override
     public EntityTypes getType() {
-        return EntityTypes.SnakeBody;
+        return EntityTypes.SNAKEBODY;
     }
 }
