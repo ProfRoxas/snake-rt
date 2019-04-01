@@ -34,6 +34,11 @@ public class TableMap {
         __field = new Entity[__x][__y];
 
         __container = new LinkedList<>();
+
+        for(int i = 0; i<wc; i++) {
+            Point p = spawnEntity(EntityTypes.WALL);
+            if(p==null) System.err.println("Failed to print Wall id "+p);
+        }
     }
     
     /**
