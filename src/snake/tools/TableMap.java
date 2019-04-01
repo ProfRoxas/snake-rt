@@ -114,7 +114,7 @@ public class TableMap {
             default: e = null;
         }
         if(e == null) return null;
-        this.place(p, e);
+        this.place(e);
         return p;
     }
 }
