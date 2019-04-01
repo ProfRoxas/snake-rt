@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 import snake.entities.Entity;
+import snake.entities.Fruit;
+import snake.entities.Wall;
+import snake.enums.EntityTypes;
 
 public class TableMap {
     private final int __x;
@@ -79,18 +82,33 @@ public class TableMap {
         __container.forEach(entity->entity.tick());
     }
     /**
-     * Spawn a new Fruit on the map
-     * @return false, if there are less than 5 tiles free
+     * Spawn a new Entity on the map
+     * 
+     * @param et the Type of the Entity
+     * 
+     * @return Point on success, null if there are less than 5 tiles free or Unsupported EntityType
      */
-    public boolean spawnEntity(Entity e) {
+    public Point spawnEntity(EntityTypes et) {
         /* A buffer to prevent pseudo infinite loop for the last free tiles */
         int lastBuffer = 5; int rx,ry;
-        if(__container.size() > ((__x*__y)-5)) return false;
+        if(__container.size() > ((__x*__y)-lastBuffer)) return null;
         do {
             rx = __random.nextInt(__x);
             ry = __random.nextInt(__y);
         } while(__field[rx][ry] != null);
-        this.place(new Point(rx,ry), e);
-        return true;
+        Point p = new Point(rx,ry);
+        Entity e;
+        switch(et) {
+            case WALL:
+                e = new Wall(p);    
+                break;
+            case BASICFRUIT:
+                e = new Fruit(et, p);
+                break;
+            default: e = null;
+        }
+        if(e == null) return null;
+        this.place(p, e);
+        return p;
     }
 }
