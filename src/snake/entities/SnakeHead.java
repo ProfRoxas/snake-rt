@@ -1,5 +1,6 @@
 package snake.entities;
 
+import java.awt.Point;
 import java.util.Deque;
 import java.util.LinkedList;
 import snake.tools.SnakePoint;
@@ -39,25 +40,39 @@ public class SnakeHead implements Entity {
 		}
     }
 
-    public void move(Direction dir, String tile) {
+    //First object is the new Body Element, second one is the Deleted Body Element.
+    public SnakeBody[] move(Direction dir, String tile) {
+        SnakeBody[] refresh = new SnakeBody[2];
         if(tile.equals("")) {
             body.addFirst(new SnakeBody(position.x, position.y, "Body"));
+            refresh[0] = body.peekFirst();
+            refresh[1] = body.peekLast();
             body.removeLast();
             body.peekLast().setVisual("Tale");
             move(dir);
+
         }
         if(tile.equals("Food")) {
             body.addFirst(new SnakeBody(position.x, position.y, "FatBody"));
+            refresh[0] = body.peekFirst();
+            refresh[1] = null;
             move(dir);
         }
+        return refresh;
     }
 
-    public void tick() {
+    public Deque<SnakeBody> getSnakeBody() {
+        return body;
+    }
 
+    public Point getLocation() {
+        return position.getLocation();
     }
     
     @Override
     public String toString() {
            return "Head";
     }
+    
+    public void tick() {}
 }
