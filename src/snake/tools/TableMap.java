@@ -49,6 +49,7 @@ public class TableMap {
      * @return either null or the Entity object currently on that tile
      */
     public Entity get(Point p){
+        p = new Point(p.x%__x, p.y%__y);
         return __field[p.x][p.y];
     }
 
@@ -61,6 +62,8 @@ public class TableMap {
      */
     public boolean place(Entity e) {
         Point p = e.getLocation();
+        //checks for inside boundaries
+        if(p.x!=(p.x%__x) && p.y!=(p.y%__y)) return false;
         if(__field[p.x][p.y] != null)
             return false;
         __field[p.x][p.y] = e;
@@ -76,6 +79,7 @@ public class TableMap {
      * @return The entity that occupied the tile
      */
     public Entity remove(Point p) {
+        p = new Point(p.x%__x, p.y%__y);
         Entity r = __field[p.x][p.y];
         __container.remove(r);
         __field[p.x][p.y] = null;
