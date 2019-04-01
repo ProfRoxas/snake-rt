@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import snake.tools.SnakePoint;
 import snake.enums.Direction;
+import snake.enums.EntityTypes;
 import snake.entities.SnakeBody;
 
 public class SnakeHead implements Entity {
@@ -75,4 +76,9 @@ public class SnakeHead implements Entity {
     }
     
     public void tick() {}
+    
+    @Override
+    public EntityTypes getType() {
+        return EntityTypes.SnakeHead;
+    }
 }

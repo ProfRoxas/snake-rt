@@ -2,6 +2,8 @@ package snake.entities;
 
 import java.awt.Point;
 
+import snake.enums.EntityTypes;
+
 public class Wall implements Entity {
     private final Point __location;
     
@@ -21,5 +23,10 @@ public class Wall implements Entity {
     @Override
     public Point getLocation() {
         return __location;
+    }
+    
+    @Override
+    public EntityTypes getType() {
+        return EntityTypes.Wall;
     }
 }

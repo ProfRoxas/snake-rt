@@ -2,6 +2,8 @@ package snake.entities;
 
 import java.awt.Point;
 
+import snake.enums.EntityTypes;
+
 public class SnakeBody implements Entity {
     private Point position;
     private String visual;
@@ -29,4 +31,9 @@ public class SnakeBody implements Entity {
     }
 
     public void tick() {}
+    
+    @Override
+    public EntityTypes getType() {
+        return EntityTypes.SnakeBody;
+    }
 }

@@ -2,15 +2,13 @@ package snake.entities;
 
 import java.awt.Point;
 
+import snake.enums.EntityTypes;
+
 public class Fruit implements Entity {
-    private  final FruitTypes __type;
+    private  final EntityTypes __type;
     private final Point __location;
 
-    public static enum FruitTypes {
-        Basic
-    }
-
-    public Fruit(FruitTypes ft, Point p) {
+    public Fruit(EntityTypes ft, Point p) {
         __type = ft;
         __location = p;
     }
@@ -28,5 +26,10 @@ public class Fruit implements Entity {
     @Override
     public Point getLocation() {
         return __location;
+    }
+
+    @Override
+    public EntityTypes getType() {
+        return __type;
     }
 }
