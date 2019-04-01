@@ -30,7 +30,7 @@ public class TableMap {
     public TableMap(int mx, int my, int wc, long rs) {
         __random = new Random(rs);
         __x = mx;
-        __y = mx;
+        __y = my;
         __field = new Entity[__x][__y];
 
         __container = new LinkedList<>();
@@ -55,11 +55,12 @@ public class TableMap {
     /**
      * Place a new entity on the field, if possible
      * 
-     * @param p the tile you want to place it onto
+     * @param e the Entity you want to place
      * 
      * @return True if it's empty, or False, if it's occupied
      */
-    public boolean place(Point p, Entity e) {
+    public boolean place(Entity e) {
+        Point p = e.getLocation();
         if(__field[p.x][p.y] != null)
             return false;
         __field[p.x][p.y] = e;
