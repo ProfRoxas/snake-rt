@@ -1,6 +1,7 @@
 package snake;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,7 @@ public class MapTest
      * Tests Spawn and if there are 4 walls witht he seed
      */
     @Test
-    public void New5x6Map4Wall(){
+    public void Deterministic5x6Map4Wall(){
         setup();
         Point w1 = new Point(0,4);
         Point w2 = new Point(0,5);
@@ -37,6 +38,19 @@ public class MapTest
         assertNotEquals("Wall is not at it's place", null, tm.get(w2));
         assertNotEquals("Wall is not at it's place", null, tm.get(w3));
         assertNotEquals("Wall is not at it's place", null, tm.get(w4));
+    }
+    /**
+     * Tests if the enum is inserted
+     */
+    @Test
+    public void EntityPlacing() {
+        setup();
+        Point p = new Point(2,3);
+        Entity e = tm.get(p);
+        if (e != null) throw new AssertionError("The tile is already occupied?");
+        e = new Wall(p);
+        assertTrue("Failed to place Entity on empty place", tm.place(e));
+        assertEquals("Different entity has been returned", tm.get(p), e);
     }
     /**
      * Tests if the map can wrap around
