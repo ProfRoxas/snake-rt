@@ -43,14 +43,16 @@ public class MapTest
      * Tests if the enum is inserted
      */
     @Test
-    public void EntityPlacing() {
+    public void EntityPlaceAndRemove() {
         setup();
         Point p = new Point(2,3);
         Entity e = tm.get(p);
         if (e != null) throw new AssertionError("The tile is already occupied?");
         e = new Wall(p);
         assertTrue("Failed to place Entity on empty place", tm.place(e));
-        assertEquals("Different entity has been returned", tm.get(p), e);
+        assertEquals("Different entity has been returned", e, tm.get(p));
+        assertEquals("Removing didn't give back the original Entity", e, tm.remove(p));
+        assertEquals("Removing didn't place null in it's place", null, tm.get(p));
     }
     /**
      * Tests if the map can wrap around
