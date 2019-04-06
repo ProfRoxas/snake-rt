@@ -32,7 +32,7 @@ class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         __gameLogic = new Logic(this);
-        addKeyListener(new KeyEventListener(/* passing gameLogic later*/));
+        addKeyListener(new KeyEventListener(__gameLogic));
         __timer = new Timer();
         Main window = this;
         // = new Thread();
@@ -40,8 +40,7 @@ class Main extends JFrame {
             
             @Override
             public void run() {
-                //TODO: Update GameLogic
-                System.out.println("Logic Goes Here!");
+                __gameLogic.update();
                 __sleepertimer.run();
             }
         };
