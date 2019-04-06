@@ -8,15 +8,30 @@ public class SnakeBody implements Entity {
     private Point position;
     private String visual;
 
+    /**
+     * Create a new Snake based on the parameters.
+     * 
+     * @param x Body element starting x position
+     * @param y Body element starting y position
+     * @param visual The body element visual parameter in String 
+     */
     public SnakeBody(int x, int y, String visual) {
         position = new Point(x, y);
         this.visual = visual;
     }
 
+    /**
+     * 
+     * @param visual The body element visual parameter in String 
+     */
     public void setVisual(String visual) {
         this.visual = visual;
     }
-
+    
+    /**
+    * 
+    * @return The body element visual parameter in String
+    */
     public String getVisual() {
         return visual;
     }
