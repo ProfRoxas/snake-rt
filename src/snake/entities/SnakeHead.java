@@ -25,10 +25,10 @@ public class SnakeHead implements Entity {
         position = new SnakePoint(x, y, worldX, worldY);
         body = new LinkedList<SnakeBody>();
 
-        for(int i = 1; i < bodyLength-1; i++) {
-            body.add(new SnakeBody(x-i, y, EntityTypes.SNAKEBODY));
+        for(int i = 1; i <= bodyLength-1; i++) {
+            body.add(new SnakeBody(x+i, y, EntityTypes.SNAKEBODY));
         }
-        body.add(new SnakeBody(x-bodyLength, y, EntityTypes.SNAKETAIL));
+        body.add(new SnakeBody(x+bodyLength, y, EntityTypes.SNAKETAIL));
     }
 
     public SnakeHead(int x, int y, int worldX, int worldY) {
@@ -42,16 +42,16 @@ public class SnakeHead implements Entity {
      */
 	private void move(Direction dir) {
 		if(dir.equals(Direction.valueOf("UP"))) {
-			position.translate(-1, 0);
-		}
-		if(dir.equals(Direction.valueOf("DOWN"))) {
-			position.translate(1, 0);
-		}
-		if(dir.equals(Direction.valueOf("RIGHT"))) {
 			position.translate(0, 1);
 		}
-		if(dir.equals(Direction.valueOf("LEFT"))) {
+		if(dir.equals(Direction.valueOf("DOWN"))) {
 			position.translate(0, -1);
+		}
+		if(dir.equals(Direction.valueOf("RIGHT"))) {
+			position.translate(1, 0);
+		}
+		if(dir.equals(Direction.valueOf("LEFT"))) {
+			position.translate(-1, 0);
 		}
     }
     
@@ -59,23 +59,23 @@ public class SnakeHead implements Entity {
      * Move Snake to the given direction and if the parameters right grow the Snake
      * 
      * @param dir Direction where you want to move the Snake
-     * @param tile If Food, the Snake grow, if not the second Body Element is null
+     * @param food If true, the Snake grow, if not the second Body Element is null
      * 
      * @return An array: First object is the new Body Element, second one is the Deleted Body Element.
      */
-    public SnakeBody[] move(Direction dir, String tile) {
+    public SnakeBody[] move(Direction dir, Boolean food) {
         SnakeBody[] refresh = new SnakeBody[2];
-        if(tile.equals("")) {
+        if(food) {
+            body.addFirst(new SnakeBody(position.x, position.y, EntityTypes.FATSNAKEBODY));
+            refresh[0] = body.peekFirst();
+            refresh[1] = null;
+        }
+        else {
             body.addFirst(new SnakeBody(position.x, position.y, EntityTypes.SNAKEBODY));
             refresh[0] = body.peekFirst();
             refresh[1] = body.peekLast();
             body.removeLast();
-            body.peekLast().setVisual(EntityTypes.SNAKETAIL);
-        }
-        if(tile.equals("Food")) {
-            body.addFirst(new SnakeBody(position.x, position.y, EntityTypes.FATSNAKEBODY));
-            refresh[0] = body.peekFirst();
-            refresh[1] = null;
+            body.peekLast().setType(EntityTypes.SNAKETAIL);
         }
         move(dir);
         return refresh;

@@ -14,7 +14,7 @@ public class SnakePoint extends Point {
     
     @Override
     public void translate(int dx, int dy) {
-        x = (x + dx) % worldX;
-        y = (y + dy) % worldY;
+        x = Math.floorMod( x + dx,  worldX);
+        y = Math.floorMod( y + dy,  worldY);
     }
 }

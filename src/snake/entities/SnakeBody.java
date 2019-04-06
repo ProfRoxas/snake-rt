@@ -25,7 +25,7 @@ public class SnakeBody implements Entity {
      * 
      * @param visual The body element visual parameter in EntityTypes enum 
      */
-    public void setVisual(EntityTypes visual) {
+    public void setType(EntityTypes visual) {
         this.visual = visual;
     }
 
