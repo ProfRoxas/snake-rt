@@ -1,7 +1,6 @@
 package snake.tools;
 
 import java.awt.Point;
-import java.lang.annotation.Documented;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -16,8 +15,7 @@ public class TableMap {
     private final int __y;
     private final Entity __field[][];
     private final Random __random;
-    /** The objects the map holds, for quicker tick() iterating */
-    private List<Entity> __container;
+    private int __size;
 
     /**
      * Create a new Entity field based on the parameters.
@@ -33,7 +31,7 @@ public class TableMap {
         __y = my;
         __field = new Entity[__x][__y];
 
-        __container = new LinkedList<>();
+        __size = 0;
 
         for(int i = 0; i<wc; i++) {
             Point p = spawnEntity(EntityTypes.WALL);
@@ -67,8 +65,7 @@ public class TableMap {
         if(__field[p.x][p.y] != null)
             return false;
         __field[p.x][p.y] = e;
-        /* [TODO] Put snake parts in the head for quicker remove */
-        __container.add(e);
+        __size++;
         return true;
     }
     /**
@@ -81,15 +78,35 @@ public class TableMap {
     public Entity remove(Point p) {
         p = new Point(p.x%__x, p.y%__y);
         Entity r = __field[p.x][p.y];
-        __container.remove(r);
+        __size--;
         __field[p.x][p.y] = null;
         return r;
     }
     /**
+     * [OBSOLETE]
      * Calls the Tick function on every Entity of the map for game logic update
      */
     public void tick() {
-        __container.forEach(entity->entity.tick());
+        
+        //__container.forEach(entity->entity.tick());
+    }
+    /**
+     * 
+     * @param et
+     * @return
+     */
+    private List<Point> getFreeTiles() {
+        List<Point> l = new LinkedList<>();
+        Point p = new Point();
+        for(int x = 0; x< __x; x++) {
+            for(int y = 0; y< __y; y++) {
+                p.move(x,y); //Saving on Object and GC usage
+                if(get(p) == null)
+                    l.add(p);
+            }
+        }
+
+        return l;
     }
     /**
      * Spawn a new Entity on the map
@@ -101,7 +118,13 @@ public class TableMap {
     public Point spawnEntity(EntityTypes et) {
         /* A buffer to prevent pseudo infinite loop for the last free tiles */
         int lastBuffer = 5; int rx,ry;
-        if(__container.size() > ((__x*__y)-lastBuffer)) return null;
+        /* Special case on low element count */
+        if(__size > ((__x*__y)-lastBuffer)) {
+            List<Point> l = getFreeTiles();
+            int n = __random.nextInt(l.size());
+            return l.get(n);
+        }
+        /* Normal case */
         do {
             rx = __random.nextInt(__x);
             ry = __random.nextInt(__y);
