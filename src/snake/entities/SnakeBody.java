@@ -6,7 +6,7 @@ import snake.enums.EntityTypes;
 
 public class SnakeBody implements Entity {
     private Point position;
-    private String visual;
+    private EntityTypes visual;
 
     /**
      * Create a new Snake based on the parameters.
@@ -15,40 +15,28 @@ public class SnakeBody implements Entity {
      * @param y Body element starting y position
      * @param visual The body element visual parameter in String 
      */
-    public SnakeBody(int x, int y, String visual) {
+    public SnakeBody(int x, int y, EntityTypes visual) {
         position = new Point(x, y);
         this.visual = visual;
     }
 
     /**
+     * Override the previus EntityTypes enum with the parameter
      * 
-     * @param visual The body element visual parameter in String 
+     * @param visual The body element visual parameter in EntityTypes enum 
      */
-    public void setVisual(String visual) {
+    public void setVisual(EntityTypes visual) {
         this.visual = visual;
-    }
-    
-    /**
-    * 
-    * @return The body element visual parameter in String
-    */
-    public String getVisual() {
-        return visual;
     }
 
     public Point getLocation() {
         return position;
     }
 
-    @Override
-    public String toString() {
-        return visual;
-    }
-
     public void tick() {}
     
-    @Override
+    /** Get the actual EntityTypes */
     public EntityTypes getType() {
-        return EntityTypes.SNAKEBODY;
+        return visual;
     }
 }

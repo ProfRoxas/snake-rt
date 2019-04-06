@@ -4,5 +4,7 @@ public enum EntityTypes {
     BASICFRUIT,
     SNAKEHEAD,
     SNAKEBODY,
+    FATSNAKEBODY,
+    SNAKETAIL,
     WALL
 }

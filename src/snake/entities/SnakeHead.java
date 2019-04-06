@@ -19,16 +19,16 @@ public class SnakeHead implements Entity {
      * @param y Snake starting y position
      * @param worldX World maximum width
      * @param worldY World maximum height
-     * @param bodyLenght Snake starting body lenght 
+     * @param bodyLength Snake starting body length 
      */
     public SnakeHead(int x, int y, int worldX, int worldY, int bodyLength) {
         position = new SnakePoint(x, y, worldX, worldY);
         body = new LinkedList<SnakeBody>();
 
         for(int i = 1; i < bodyLength-1; i++) {
-            body.add(new SnakeBody(x-i, y, "Body"));
+            body.add(new SnakeBody(x-i, y, EntityTypes.SNAKEBODY));
         }
-        body.add(new SnakeBody(x-bodyLength, y, "Tale"));
+        body.add(new SnakeBody(x-bodyLength, y, EntityTypes.SNAKETAIL));
     }
 
     public SnakeHead(int x, int y, int worldX, int worldY) {
@@ -59,21 +59,21 @@ public class SnakeHead implements Entity {
      * Move Snake to the given direction and if the parameters right grow the Snake
      * 
      * @param dir Direction where you want to move the Snake
-     * @param tile If Food, the Snake grow
+     * @param tile If Food, the Snake grow, if not the second Body Element is null
      * 
      * @return An array: First object is the new Body Element, second one is the Deleted Body Element.
      */
     public SnakeBody[] move(Direction dir, String tile) {
         SnakeBody[] refresh = new SnakeBody[2];
         if(tile.equals("")) {
-            body.addFirst(new SnakeBody(position.x, position.y, "Body"));
+            body.addFirst(new SnakeBody(position.x, position.y, EntityTypes.SNAKEBODY));
             refresh[0] = body.peekFirst();
             refresh[1] = body.peekLast();
             body.removeLast();
-            body.peekLast().setVisual("Tale");
+            body.peekLast().setVisual(EntityTypes.SNAKETAIL);
         }
         if(tile.equals("Food")) {
-            body.addFirst(new SnakeBody(position.x, position.y, "FatBody"));
+            body.addFirst(new SnakeBody(position.x, position.y, EntityTypes.FATSNAKEBODY));
             refresh[0] = body.peekFirst();
             refresh[1] = null;
         }
@@ -89,12 +89,6 @@ public class SnakeHead implements Entity {
     /** Return the Snake head Location */
     public Point getLocation() {
         return position.getLocation();
-    }
-    
-    /** Return the Snake head String */
-    @Override
-    public String toString() {
-           return "Head";
     }
     
     public void tick() {}
