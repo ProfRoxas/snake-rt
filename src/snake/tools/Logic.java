@@ -17,14 +17,11 @@ public class Logic{
     private SnakeHead snakeHead;
     private Direction nextDirection = Direction.UP;
     private boolean status = false;
-    private JFrame visual;
-    private TableMap map;
+    private TableMap map = new TableMap(10, 10, 0, 0);
     private boolean paused = true;
-    
-    //TODO: rewrite constructor with new arguments 
-    public Logic(JFrame visual){
-        this.visual = visual;
-        //tablemap
+
+    public TableMap getMap(){
+        return map;
     }
 
     public void update(){
