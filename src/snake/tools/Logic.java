@@ -1,10 +1,16 @@
 package snake.tools;
 
 import snake.entities.SnakeHead;
+import snake.entities.Entity;
+import snake.tools.TableMap;
+import snake.enums.EntityTypes;
+
 import snake.enums.Direction;
 import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.Point;
+
 
 public class Logic{
 
@@ -12,15 +18,51 @@ public class Logic{
     private Direction nextDirection = Direction.UP;
     private boolean status = false;
     private JFrame visual;
+    private TableMap map;
+    private boolean paused = true;
     
+    //TODO: rewrite constructor with new arguments 
     public Logic(JFrame visual){
         this.visual = visual;
+        //tablemap
     }
 
     public void update(){
-        //TODO:
-        //utkozes detektalas
-        //snakeHead.move(nextDirection);
+        if (paused) return;
+        Point headPos = snakeHead.getLocation();
+        switch(nextDirection){
+            case UP:
+                headPos.translate(0, 1);
+                break;
+            case DOWN:
+                headPos.translate(0, -1);
+                break;
+            case RIGHT:
+                headPos.translate(1, 0);
+                break;
+            case LEFT:
+                headPos.translate(-1, 0);
+                break;
+        }
+
+        Entity tileEntity = map.get(headPos);
+        if (tileEntity != null) {
+            //implemented with switch for future use, its ugly, i get it
+            switch(tileEntity.getType()){
+                case BASICFRUIT:
+                    snakeHead.move(nextDirection, true);
+                    break;
+                default:
+                    gameOver();
+            }
+        }else{
+            snakeHead.move(nextDirection, false);
+        }
+    }
+
+    //TODO: implement game over
+    public void gameOver(){
+        System.out.println("Game over!");
     }
 
     public void generateSnakeHead(){
