@@ -3,10 +3,13 @@ package snake.tools;
 import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 
 import snake.entities.Entity;
 import snake.entities.Fruit;
+import snake.entities.SnakeBody;
+import snake.entities.SnakeHead;
 import snake.entities.Wall;
 import snake.enums.EntityTypes;
 
@@ -22,16 +25,22 @@ public class TableMap {
      * 
      * @param mx Maximum X, the width
      * @param my Maximum Y, the height
+     * @param sh The SnakeHead to place
      * @param wc Wall Count, the initial count of walls
      * @param rs Random Seed, the seed for the random generator
      */
-    public TableMap(int mx, int my, int wc, long rs) {
+    public TableMap(int mx, int my, SnakeHead sh, int wc, long rs) {
         __random = new Random(rs);
         __x = mx;
         __y = my;
         __field = new Entity[__x][__y];
 
-        __size = 0;
+        place(sh);
+        for (SnakeBody b : sh.getSnakeBody()) {
+            place(b);
+        }
+
+        __size = sh.getSnakeBody().size()+1;
 
         for(int i = 0; i<wc; i++) {
             Point p = spawnEntity(EntityTypes.WALL);
@@ -47,7 +56,7 @@ public class TableMap {
      * @return either null or the Entity object currently on that tile
      */
     public Entity get(Point p){
-        p = new Point(p.x%__x, p.y%__y);
+        p = new Point(Math.floorMod(p.x, __x),Math.floorMod(p.y, __y));
         return __field[p.x][p.y];
     }
 
@@ -61,7 +70,7 @@ public class TableMap {
     public boolean place(Entity e) {
         Point p = e.getLocation();
         //checks for inside boundaries
-        if(p.x!=(p.x%__x) && p.y!=(p.y%__y)) return false;
+        if(p.x!=(Math.floorMod(p.x, __x)) && p.y!=Math.floorMod(p.y, __y)) return false;
         if(__field[p.x][p.y] != null)
             return false;
         __field[p.x][p.y] = e;
@@ -76,7 +85,7 @@ public class TableMap {
      * @return The entity that occupied the tile
      */
     public Entity remove(Point p) {
-        p = new Point(p.x%__x, p.y%__y);
+        p = new Point(Math.floorMod(p.x, __x),Math.floorMod(p.y, __y));
         Entity r = __field[p.x][p.y];
         __size--;
         __field[p.x][p.y] = null;
