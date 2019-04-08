@@ -11,6 +11,7 @@ import java.awt.Point;
 import org.junit.Test;
 
 import snake.entities.Entity;
+import snake.entities.SnakeHead;
 import snake.entities.Wall;
 import snake.tools.TableMap;
 
@@ -21,7 +22,7 @@ public class MapTest
 {
     private TableMap tm;
     private void setup() {
-        tm = new TableMap(5, 6, 4, 0);
+        tm = new TableMap(5, 6, new SnakeHead(0,1,5,6), 4, 0);
     }
     /**
      * Tests Spawn and if there are 4 walls witht he seed
@@ -65,20 +66,31 @@ public class MapTest
     public void WrappedBoundaries() {
         setup();
         Point p = new Point(6,6);
+        Point p2 = new Point(-4, -6);
         Point pe = new Point(1,0);
         try {
             tm.get(p);
         } catch (ArrayIndexOutOfBoundsException ex) {
-            assertFalse("Cant access out of bounds", true);
+            assertFalse("Cant access out of positive bounds", true);
+        }
+        try {
+            tm.get(p2);
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            assertFalse("Cant access out of negative bounds", true);
         }
         // 6 mod X(5) = 1
         // 6 mod Y(6) = 0
+        //-4 mod X(5) = 1
+        //-6 mod Y(6) = 0
         Boolean b = null;
         if(tm.get(p) == null)
             b = tm.place(new Wall(pe));
         Entity e = tm.get(p);
         p = e.getLocation();
-        assertTrue("Found different entity outside of boudaries", tm.get(p).getLocation() == pe);
+        Entity e2 = tm.get(p2);
+        p2 = e2.getLocation();
+        assertEquals("Found different entity outside of positive boudaries", tm.get(p).getLocation(), pe);
+        assertEquals("Found different entity outside of negative boudaries", tm.get(p2).getLocation(), pe);
         
     }
 }
