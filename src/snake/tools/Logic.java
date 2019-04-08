@@ -17,8 +17,13 @@ public class Logic{
     private SnakeHead snakeHead;
     private Direction nextDirection = Direction.UP;
     private boolean status = false;
-    private TableMap map = new TableMap(10, 10, 0, 0);
+    private TableMap map;
     private boolean paused = true;
+
+    public Logic() {
+        snakeHead = new SnakeHead(0, 0, 10, 10);
+        map = new TableMap(10, 10, snakeHead, 2, 3);
+    }
 
     public TableMap getMap(){
         return map;
