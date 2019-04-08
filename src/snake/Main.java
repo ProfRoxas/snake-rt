@@ -89,37 +89,20 @@ class Main extends JFrame {
             
             @Override
             public void run() {
-                __gameLogic.update();
-                __sleepertimer.run();
+                //Add GUI here for Thread Safety
                 // TODO: fix GUI update
             }
         };
-        __sleepertimer = new Runnable(){
-            private int frame = 0;
-            private long lasttime = 0;
+        __timer.scheduleAtFixedRate(new TimerTask() {
+
             @Override
             public void run() {
-                frame++;
-                long newtime = System.nanoTime();
-                long delta = newtime - lasttime;
-                float deltams = delta/1000000.0f;
-                //System.out.println("Hello World "+frame+", frametime: "+deltams+"ms");
-                long target = 1000/__fps;
-                if(deltams < target) {
-                    try{
-                        System.out.println("Sleeping for "+(target-deltams)+"ms (target: "+target+"ms");
-                        Thread.sleep((target*1000000-delta)/1000000);
-                    }
-                    catch(InterruptedException e) {System.out.println("InterruptedException");}
-                }
-                newtime = System.nanoTime();
-                System.out.println("Hello World "+frame+", frametime: "+(newtime-lasttime)/1000000+"ms");
-                lasttime = newtime;
+                __gameLogic.update();
+                //GUI Schedule for Thread Safety
                 EventQueue.invokeLater(__timertask);
             }
-        };
-        EventQueue.invokeLater(__timertask);
-        //__timer.schedule( __timertask, 1000/__fps);
+
+        }, 1000, 1000/__fps);
     }
 
     public void refreshMap(){
