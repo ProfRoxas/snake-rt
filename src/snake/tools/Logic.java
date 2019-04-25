@@ -22,7 +22,8 @@ public class Logic{
 
     public Logic() {
         snakeHead = new SnakeHead(0, 0, 10, 10);
-        map = new TableMap(10, 10, snakeHead, 2, 3);
+        Point pm = Settings.getMapSize();
+        map = new TableMap(pm.x, pm.y, snakeHead, 3, 3);
     }
 
     public TableMap getMap(){

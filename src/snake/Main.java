@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 
 import snake.tools.KeyEventListener;
 import snake.tools.Logic;
+import snake.tools.Settings;
 import snake.enums.EntityTypes;
 
 class Main extends JFrame {
@@ -46,7 +47,7 @@ class Main extends JFrame {
         // add(__canvas);
 
         setTitle("Snake RT");
-        setSize(640, 480);
+        setSize(Settings.getScreen());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         __gameLogic = new Logic();

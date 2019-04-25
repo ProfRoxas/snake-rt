@@ -1,25 +1,31 @@
 package snake.tools;
 
+import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileReader;
+import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.Random;
 
 public class Settings {
-    private static int __x;
-    private static int __y;
-    private static int __seed;
-    private static int __walls;
 
+    private static int __x = 10;
+    private static int __y = 10;
+    private static int __seed = new Random().nextInt();
+    private static int __walls = 3;
+    private static int __h = 480;
+    private static int __w = 640;
     static {
-        File f = new File("./settings.ini");
-        if(!f.canRead()) {
-            __x = 10;
-            __y = 10;
-            __seed = new Random().nextInt();
-            __walls = 10;
-        }else readSettings(f);
+        try {
+            File f = new File(Settings.class.getResource("../../settings.ini").toURI());
+            if(f!=null && f.canRead())
+                readSettings(f);
+                //internal variables have their values already assigned, so only the new ones from the ini gets overriden
+        }catch(URISyntaxException e){
+            System.out.println("Error converting URI");
+            e.printStackTrace();
+        }
     }
     /**
      * Prevent making an instance of this Class
@@ -65,6 +71,39 @@ public class Settings {
     }
 
     /**
+     * Set the number of walls
+     * @param wc Wall count
+     */
+    public static void setWalls(int wc) {
+        __walls = wc;
+    }
+
+    /**
+     * Get the number of walls
+     * @return Number of walls
+     */
+    public static int getWalls() {
+        return __walls;
+    }
+    /**
+     * Set the Window resolution
+     * @param d Dimension of the screen
+     */
+    public static void setScreen(Dimension d) {
+        //not the best but works
+        __h = (int)(d.getHeight());
+        __w = (int)(d.getWidth());
+    }
+
+    /**
+     * Get the Window size
+     * @return Window size
+     */
+    public static Dimension getScreen() {
+        return new Dimension(__w, __h);
+    }
+
+    /**
      * Parses the settings file
      */
     private static void readSettings(File f) {
@@ -76,7 +115,7 @@ public class Settings {
         }
 
         __x = Integer.parseInt(p.getProperty("Map_Width", "10"));
-        __y = Integer.parseInt(p.getProperty("MapHeight", "10"));
-        __seed = Integer.parseInt(p.getProperty("MapSeed", "10"));
+        __y = Integer.parseInt(p.getProperty("Map_Height", "10"));
+        __seed = Integer.parseInt(p.getProperty("Map_Seed", "10"));
     }
 }
