@@ -29,13 +29,16 @@ public class SnakeBody implements Entity {
         this.visual = visual;
     }
 
+    /** Return the Snake body element Location 
+     *  @return position
+    */
     public Point getLocation() {
         return position;
     }
-
-    public void tick() {}
     
-    /** Get the actual EntityTypes */
+    /** Return the Snake head Type 
+     *  @return visual
+    */
     public EntityTypes getType() {
         return visual;
     }

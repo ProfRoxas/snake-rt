@@ -30,7 +30,15 @@ public class SnakeHead implements Entity {
         }
         body.add(new SnakeBody(x+bodyLength, y, EntityTypes.SNAKETAIL));
     }
-
+    
+    /**
+     * Create a new Snake based on the parameters with 3 length
+     * 
+     * @param x Snake starting x position
+     * @param y Snake starting y position
+     * @param worldX World maximum width
+     * @param worldY World maximum height
+     */
     public SnakeHead(int x, int y, int worldX, int worldY) {
         this(x, y, worldX, worldY, 3);
     }
@@ -91,8 +99,7 @@ public class SnakeHead implements Entity {
         return position.getLocation();
     }
     
-    public void tick() {}
-    
+    /** Return the Snake head Type */
     public EntityTypes getType() {
         return EntityTypes.SNAKEHEAD;
     }
