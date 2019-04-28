@@ -8,6 +8,11 @@ import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.Random;
 
+/**
+ * The Settings static class handles the global settings, like new map settings, window configuration etc
+ * <p>
+ * The class preserves the settings in a .ini file
+ */
 public class Settings {
 
     private static int __x = 10;
@@ -16,6 +21,9 @@ public class Settings {
     private static int __walls = 3;
     private static int __h = 480;
     private static int __w = 640;
+    /**
+     * Loads the settings.ini at initialization, if exists, otherwise use the initial parameters
+     */
     static {
         try {
             File f = new File(Settings.class.getResource("../../settings.ini").toURI());
@@ -113,7 +121,7 @@ public class Settings {
             System.err.println("Settings file couldn't be read");
             e.printStackTrace();
         }
-
+        //TODO: Add more possible settings parameter
         __x = Integer.parseInt(p.getProperty("Map_Width", "10"));
         __y = Integer.parseInt(p.getProperty("Map_Height", "10"));
         __seed = Integer.parseInt(p.getProperty("Map_Seed", "10"));

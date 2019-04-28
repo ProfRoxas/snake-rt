@@ -13,6 +13,10 @@ import snake.entities.SnakeHead;
 import snake.entities.Wall;
 import snake.enums.EntityTypes;
 
+/**
+ * The TableMap stores the playfield of the game, each location hold either <code>null</code> or an <code>snake.entities.Entity</code> object. 
+ * The Coordinates are wrapped around to assist in the snake going to the other side of the field.
+ */
 public class TableMap {
     private final int __x;
     private final int __y;
@@ -92,17 +96,7 @@ public class TableMap {
         return r;
     }
     /**
-     * [OBSOLETE]
-     * Calls the Tick function on every Entity of the map for game logic update
-     */
-    public void tick() {
-        
-        //__container.forEach(entity->entity.tick());
-    }
-    /**
-     * 
-     * @param et
-     * @return
+     * Returns how many free tiles are in the field when the free spaces are less than an optimal ammount for random
      */
     private List<Point> getFreeTiles() {
         List<Point> l = new LinkedList<>();
