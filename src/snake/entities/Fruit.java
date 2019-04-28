@@ -14,11 +14,6 @@ public class Fruit implements Entity {
     }
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public String toString() {
         return __type.toString();
     }

@@ -10,10 +10,6 @@ public class Wall implements Entity {
     public Wall(Point p) {
         __location = p;
     }
-    @Override
-    public void tick() {
-
-    }
 
     @Override
     public String toString() {
