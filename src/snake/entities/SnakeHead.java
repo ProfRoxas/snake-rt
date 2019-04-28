@@ -42,10 +42,10 @@ public class SnakeHead implements Entity {
      */
 	private void move(Direction dir) {
 		if(dir.equals(Direction.valueOf("UP"))) {
-			position.translate(0, 1);
+			position.translate(0, -1);
 		}
 		if(dir.equals(Direction.valueOf("DOWN"))) {
-			position.translate(0, -1);
+			position.translate(0, 1);
 		}
 		if(dir.equals(Direction.valueOf("RIGHT"))) {
 			position.translate(1, 0);
