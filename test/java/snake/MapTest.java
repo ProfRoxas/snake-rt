@@ -41,7 +41,7 @@ public class MapTest
         assertNotEquals("Wall is not at it's place", null, tm.get(w4));
     }
     /**
-     * Tests if the enum is inserted
+     * Tests if the entity is inserted
      */
     @Test
     public void EntityPlaceAndRemove() {
@@ -51,6 +51,7 @@ public class MapTest
         if (e != null) throw new AssertionError("The tile is already occupied?");
         e = new Wall(p);
         assertTrue("Failed to place Entity on empty place", tm.place(e));
+        assertFalse("Placing the same Entity didn't give false", tm.place(e));
         assertEquals("Different entity has been returned", e, tm.get(p));
         assertEquals("Removing didn't give back the original Entity", e, tm.remove(p));
         assertEquals("Removing didn't place null in it's place", null, tm.get(p));
