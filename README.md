@@ -2,6 +2,7 @@
 A snake-like game project for the Project Tools course on ELTE
 
 [![Build Status](https://travis-ci.com/ProfRoxas/snake-rt.svg?branch=master)](https://travis-ci.com/ProfRoxas/snake-rt)
+[![codecov](https://codecov.io/gh/ProfRoxas/snake-rt/branch/master/graph/badge.svg)](https://codecov.io/gh/ProfRoxas/snake-rt)
 
 # About the Game
 
