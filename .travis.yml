@@ -1,7 +1,21 @@
 language: java
 jdk: oraclejdk8
 
-script: "mvn cobertura:cobertura"
+script: 
+  - "mvn test -B"
+  - "mvn cobertura:cobertura"
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  
+before_deploy: "echo 'Deplosing Test'"
+deploy:
+  provider: releases
+  skip_cleanup: true
+  api_key:
+    secure: J7OhzGZz6xILlOAdcfzW0DdzfobaTodrcuz9IeIQ4fPDYUnvaa1upTRXxRhQtG7cDayZl5S5Di7+oedjppMD50twEHESQ9KlaEtfrI4xYd6JUNrs3frxksbhp2vpqVy7nG6Lf5vhdmnw8mx187fhZq/VikUihfzEwJUCRLhlQi7jjTirArY9dG3NSzCs+g3X9sKHpjmLGEejA+t114PNwS7zxJZvZ+KzmhJj+JC+/LaM7SzcrccWi368QzQ5AGvojTw6JXlbv5Aum6rwQAvQlUb3qMNKvwtidMqKoJdenVN4jSktS79RAJSYrr+BNFeRhylZMni9fEHeZY7vfaUZo4fLNr29b8MrtJGUV42tkDamSOgk5T9h7fcC8BQGG9D2O712ncLojGuJuxKHbCWwIWsKswd1+jdcIXIPbxjkUMZZpFLP49EBVDGw47IVO87Gs9RKk27Avr/iArNc0VeTsPGCRF7EHkVXb5UOjaWSe7dK9qtub7GJfDxLXweYk0icYPCylXmRF0+JmISgWJsWpbtc/fefhleBy0/FDAzmsO7QBFHDNN1trJzZMepoZeD3ZrCRYHzQpxYhxCZLsY6YJZzL6SkFCkfGARA+4jx1Mbln8dsG2elOo8xPsviXe1tmCrsYtHN6TeKtHVPKAVBT2uQ1YCKWfj1P/VYvc9CWgwE=
+  file: ${HOME}/.m2/repository/snake/snake-rt/0.1-SNAPSHOT/snake-rt-0.1-SNAPSHOT.jar
+  on:
+    repo: ProfRoxas/snake-rt
+    tags: true
+after_deploy: "echo 'Deployed?'"
