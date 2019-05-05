@@ -51,9 +51,9 @@ public class SnakeHeadTest
         
         snake.move(Direction.LEFT, false);
         Point point1 = new Point(4 , 5);
-        Point point2 = new Point(3 , 6);
+        Point point2 = new Point(3 , 4);
         Point point3 = new Point(2 , 5);
-        Point point4 = new Point(3 , 4);
+        Point point4 = new Point(3 , 6);
         Point tailPoint1 = new Point(8, 5);
         Point tailPoint2 = new Point(7, 5);
 
