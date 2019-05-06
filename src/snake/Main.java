@@ -10,6 +10,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -53,13 +54,13 @@ class Main extends JFrame {
         __gameLogic = new Logic();
         this.setLayout(new GridLayout(10, 10, 0, 0));
         try {
-            URL url = this.getClass().getResource("./../fruit.png");
+            InputStream url = this.getClass().getResourceAsStream("/fruit.png");
             fruitImg = ImageIO.read(url);
-            url = this.getClass().getResource("./../ground.png");
+            url = this.getClass().getResourceAsStream("/ground.PNG");
             groundImg = ImageIO.read(url);
-            url = this.getClass().getResource("./../snake.png");
+            url = this.getClass().getResourceAsStream("/snake.PNG");
             snakeImg = ImageIO.read(url);
-            url = this.getClass().getResource("./../wall.png");
+            url = this.getClass().getResourceAsStream("/wall.PNG");
             wallImg = ImageIO.read(url);
             for (int i = 0; i < 10; i++) {
                 for (int j = 0; j < 10; j++) {

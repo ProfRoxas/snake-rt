@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileReader;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.Random;
@@ -26,12 +27,12 @@ public class Settings {
      */
     static {
         try {
-            File f = new File(Settings.class.getResource("../../settings.ini").toURI());
-            if(f!=null && f.canRead())
+            InputStream f = Settings.class.getResourceAsStream("/settings.ini");
+            if(f!=null)
                 readSettings(f);
                 //internal variables have their values already assigned, so only the new ones from the ini gets overriden
-        }catch(URISyntaxException e){
-            System.out.println("Error converting URI");
+        }catch(Exception e){
+            System.out.println("Error loading settings.ini");
             e.printStackTrace();
         }
     }
@@ -114,9 +115,9 @@ public class Settings {
     /**
      * Parses the settings file
      */
-    private static void readSettings(File f) {
+    private static void readSettings(InputStream f) {
         Properties p = new Properties();
-        try {p.load(new FileReader(f));}
+        try {p.load(f);}
         catch(Exception e) {
             System.err.println("Settings file couldn't be read");
             e.printStackTrace();
