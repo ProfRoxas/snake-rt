@@ -4,6 +4,7 @@ import snake.entities.SnakeHead;
 import snake.entities.Entity;
 import snake.tools.TableMap;
 import snake.enums.EntityTypes;
+import snake.entities.SnakeBody;
 
 import snake.enums.Direction;
 import javax.swing.JFrame;
@@ -18,7 +19,7 @@ public class Logic{
     private Direction nextDirection = Direction.UP;
     private boolean status = false;
     private TableMap map;
-    private boolean paused = true;
+    private boolean paused = false;
 
     public Logic() {
         snakeHead = new SnakeHead(0, 0, 10, 10);
@@ -33,12 +34,19 @@ public class Logic{
     public void update(){
         if (paused) return;
         Point headPos = snakeHead.getLocation();
+        Entity tile = map.get(headPos);
+        if (tile != null && tile.getType() != EntityTypes.BASICFRUIT && tile.getType() != EntityTypes.WALL) {
+        	//not nice but works
+        	return;
+        }
+        map.remove(headPos);
+        
         switch(nextDirection){
             case UP:
-                headPos.translate(0, 1);
+                headPos.translate(0, -1);
                 break;
             case DOWN:
-                headPos.translate(0, -1);
+                headPos.translate(0, 1);
                 break;
             case RIGHT:
                 headPos.translate(1, 0);
@@ -49,22 +57,36 @@ public class Logic{
         }
 
         Entity tileEntity = map.get(headPos);
+        SnakeBody[] body = null;
         if (tileEntity != null) {
             //implemented with switch for future use, its ugly, i get it
             switch(tileEntity.getType()){
                 case BASICFRUIT:
-                    snakeHead.move(nextDirection, true);
+                    body = snakeHead.move(nextDirection, true);
                     break;
                 default:
                     gameOver();
             }
         }else{
-            snakeHead.move(nextDirection, false);
+            body = snakeHead.move(nextDirection, false);
+        }
+        if (!paused) {
+        	map.place(snakeHead);
+        	map.place(body[0]);
+        	if (body[1] != null) {
+        		map.remove(body[1].getLocation());	
+        	}
         }
     }
 
+    public void setPaused(boolean toSet){
+    	paused = toSet;
+    }
+
+
     //TODO: implement game over
     public void gameOver(){
+    	paused = true;
         System.out.println("Game over!");
     }
 
