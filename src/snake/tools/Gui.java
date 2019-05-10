@@ -61,6 +61,7 @@ public class Gui extends JPanel {
                     this.add(label, point);
                 }
             }
+            refreshMap();
         }catch(IOException e){
             System.out.println("Image(s) not found.");
         }
