@@ -33,7 +33,7 @@ class Main extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         __gameLogic = new Logic();
-        
+        g = new Gui(__gameLogic);
         addKeyListener(new KeyEventListener(__gameLogic));
         __timer = new Timer();
         // = new Thread();
@@ -58,7 +58,6 @@ class Main extends JFrame {
 
         }, 1000, 1000/__fps);
 
-        g = new Gui(__gameLogic);
         Menu m = new Menu();
         this.add(g);
         this.pack();
