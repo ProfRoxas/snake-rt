@@ -17,9 +17,10 @@ public class Logic{
 
     private SnakeHead snakeHead;
     private Direction nextDirection = Direction.UP;
+    private Direction lastDirection = Direction.UP;
     private boolean status = false;
     private TableMap map;
-    private boolean paused = false;
+    private boolean paused = true;
 
     public Logic() {
         snakeHead = new SnakeHead(0, 0, 10, 10);
@@ -32,15 +33,9 @@ public class Logic{
     }
 
     public void update(){
-        if (paused) return;
+        if (paused || getOppositeDirection(nextDirection) == lastDirection) return;
         Point headPos = snakeHead.getLocation();
-        Entity tile = map.get(headPos);
-        if (tile != null && tile.getType() != EntityTypes.BASICFRUIT && tile.getType() != EntityTypes.WALL) {
-        	//not nice but works
-        	return;
-        }
         map.remove(headPos);
-        
         switch(nextDirection){
             case UP:
                 headPos.translate(0, -1);
@@ -55,6 +50,7 @@ public class Logic{
                 headPos.translate(-1, 0);
                 break;
         }
+        lastDirection = nextDirection;
 
         Entity tileEntity = map.get(headPos);
         SnakeBody[] body = null;
@@ -121,6 +117,21 @@ public class Logic{
 
     public void setNextDirection(Direction dir){
         nextDirection = dir;
+    }
+
+    private Direction getOppositeDirection(Direction dir){
+    	switch(dir){
+    		case UP:
+    			return Direction.DOWN;
+    		case DOWN:
+    			return Direction.UP;
+    		case LEFT:
+    			return Direction.RIGHT;
+    		case RIGHT:
+    			return Direction.LEFT;
+    		default:
+    			return null;
+    	}
     }
 
 }
