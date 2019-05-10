@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import snake.tools.Gui;
 import snake.tools.KeyEventListener;
 import snake.tools.Logic;
+import snake.tools.Menu;
 import snake.tools.Settings;
 
 class Main extends JFrame {
@@ -16,6 +17,7 @@ class Main extends JFrame {
     private static Timer __timer;
     private int __fps = 10;
     private Runnable __timertask;
+    private Gui g;
 
     public Main() {
         System.out.println("Test");
@@ -41,6 +43,8 @@ class Main extends JFrame {
             public void run() {
                 //Add GUI here for Thread Safety
                 // TODO: fix GUI update
+                g.refreshMap();
+                //System.out.println("Updating GUI");
             }
         };
         __timer.scheduleAtFixedRate(new TimerTask() {
@@ -54,7 +58,8 @@ class Main extends JFrame {
 
         }, 1000, 1000/__fps);
 
-        Gui g = new Gui(__gameLogic);
+        g = new Gui(__gameLogic);
+        Menu m = new Menu();
         this.add(g);
         this.pack();
     }
