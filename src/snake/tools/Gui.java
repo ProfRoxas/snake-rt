@@ -27,7 +27,7 @@ public class Gui extends JPanel {
         x = (int)gm.getMap().getSize().getX();
         y = (int)gm.getMap().getSize().getY();
         System.out.println(x + " " + y);
-        this.setLayout(new GridLayout(x, y, 0, 0));
+        this.setLayout(new GridLayout(y, x, 0, 0));
         try {
             InputStream url = this.getClass().getResourceAsStream("/fruit.png");
             BufferedImage fruitImg = ImageIO.read(url);
@@ -58,7 +58,7 @@ public class Gui extends JPanel {
                     } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.BASICFRUIT){
                         label.setIcon(fruitIcon);
                     }
-                    this.add(label);
+                    this.add(label, point);
                 }
             }
         }catch(IOException e){
