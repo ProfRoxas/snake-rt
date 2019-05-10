@@ -23,8 +23,9 @@ public class Logic{
     private boolean paused = true;
 
     public Logic() {
-        snakeHead = new SnakeHead(0, 0, 10, 10);
+        
         Point pm = Settings.getMapSize();
+        snakeHead = new SnakeHead(0, 0, pm.x, pm.y);
         map = new TableMap(pm.x, pm.y, snakeHead, 3, 3);
     }
 
