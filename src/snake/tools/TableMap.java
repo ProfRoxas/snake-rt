@@ -51,6 +51,10 @@ public class TableMap {
             if(p==null) System.err.println("Failed to print Wall id "+p);
         }
     }
+
+    public Point getSize(){
+        return new Point(__x, __y);
+    }
     
     /**
      * Take the Entity placed on the tile 

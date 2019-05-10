@@ -19,10 +19,15 @@ public class Gui extends JPanel {
     private ImageIcon snakeIcon;
     private ImageIcon wallIcon;
     private Logic __gameLogic;
+    private int x;
+    private int y;
 
     public Gui(Logic gm) {
         __gameLogic = gm;
-        this.setLayout(new GridLayout(10, 10, 0, 0));
+        x = (int)gm.getMap().getSize().getX();
+        y = (int)gm.getMap().getSize().getY();
+        System.out.println(x + " " + y);
+        this.setLayout(new GridLayout(x, y, 0, 0));
         try {
             InputStream url = this.getClass().getResourceAsStream("/fruit.png");
             BufferedImage fruitImg = ImageIO.read(url);
@@ -37,8 +42,8 @@ public class Gui extends JPanel {
             snakeIcon = new ImageIcon(snakeImg);
             wallIcon = new ImageIcon(wallImg);
             Point point = new Point();
-            for (int i = 0; i < 10; i++) {
-                for (int j = 0; j < 10; j++) {
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
                     JLabel label = new JLabel();
                     point.move(j,i);
                     if(__gameLogic.getMap().get(point) == null){
@@ -63,9 +68,9 @@ public class Gui extends JPanel {
 
     public void refreshMap(){
         Point point = new Point();
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                JLabel label = (JLabel)this.getComponent(j*10 + i);
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                JLabel label = (JLabel)this.getComponent(j*x + i);
                 point.move(i,j);
                 if(__gameLogic.getMap().get(point) == null){
                     label.setIcon(groundIcon);
