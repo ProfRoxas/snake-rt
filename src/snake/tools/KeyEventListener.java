@@ -17,6 +17,8 @@ public class KeyEventListener implements KeyListener{
             if (__code == KeyEvent.VK_LEFT || __code == KeyEvent.VK_RIGHT 
                 || __code == KeyEvent.VK_UP || __code == KeyEvent.VK_DOWN) {
                 logic.setNextDirection(__code);
+            }else if(__code == KeyEvent.VK_ENTER){
+                logic.setPaused(false);
             }
     }
 
