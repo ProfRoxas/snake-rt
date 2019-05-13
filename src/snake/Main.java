@@ -30,6 +30,7 @@ class Main extends JFrame {
 
         setTitle("Snake RT");
         setSize(Settings.getScreen());
+        setMinimumSize(Settings.getScreen());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         __gameLogic = new Logic();
@@ -58,8 +59,8 @@ class Main extends JFrame {
 
         }, 1000, 1000/__fps);
 
-        Menu m = new Menu();
-        this.add(g);
+        Menu m = new Menu(g);
+        this.add(m);
         this.pack();
     }
 

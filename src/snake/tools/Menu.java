@@ -1,30 +1,41 @@
 package snake.tools;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.util.LinkedList;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import javax.swing.event.TableModelEvent;
-import javax.swing.table.DefaultTableModel;
 
 public class Menu extends JPanel {
-    public Menu() {
+    private HighScores hs;
+    public Menu(Gui g) {
+        hs = new HighScores();
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(320, 240));
         JPanel menu = new JPanel(new GridLayout(4,1));
 
         JButton b = new JButton("New Game");
+        b.addActionListener(new ActionListener(){
+        
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Container rp = SwingUtilities.getRootPane(Menu.this).getContentPane();
+                rp.removeAll();
+                rp.add(g);
+                rp.revalidate();
+            }
+        });
         menu.add(b);
 
         b = new JButton("High Scores");
@@ -33,7 +44,6 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Menu.this.remove(menu);
-                System.out.println("menu removed");
                 JPanel p = new JPanel(new BorderLayout());
                 JButton hsb = new JButton("Return");
                 hsb.addActionListener(new ActionListener(){
@@ -44,15 +54,20 @@ public class Menu extends JPanel {
                         Menu.this.add(menu, BorderLayout.CENTER);
                         Menu.this.repaint();
                         Menu.this.validate();
+                        hs.save();
                     }
                 });
                 p.add(hsb, BorderLayout.SOUTH);
-                JTable t = new JTable(new DefaultTableModel(
-                                        new Vector<>(new HighScores().getHighScores()),
-                                        new Vector<>(new LinkedList<String>())));
+                List<PersonScore> l = hs.getHighScores();
+                Object o[][] = new Object[l.size()][];int i = 0;
+                for (PersonScore ps : l) {
+                    o[i++] = new Object[] {ps.getName(), ps.getScore()};
+                }Object[] cn = new Object[] {"Player", "Score"};
+                JTable t = new JTable(o, cn);
+                //! My Precious
+                
                 p.add(t, BorderLayout.CENTER);
                 Menu.this.add(p, BorderLayout.CENTER);
-                System.out.println("Scorepanel added");
                 //Menu.this.repaint();
                 Menu.this.validate();
             }
