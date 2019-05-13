@@ -7,13 +7,16 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.LinkedList;
+import java.util.Vector;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.JTable;
 import javax.swing.SwingUtilities;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.DefaultTableModel;
 
 public class Menu extends JPanel {
     public Menu() {
@@ -25,6 +28,35 @@ public class Menu extends JPanel {
         menu.add(b);
 
         b = new JButton("High Scores");
+        b.addActionListener(new ActionListener(){
+        
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Menu.this.remove(menu);
+                System.out.println("menu removed");
+                JPanel p = new JPanel(new BorderLayout());
+                JButton hsb = new JButton("Return");
+                hsb.addActionListener(new ActionListener(){
+                
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Menu.this.remove(p);
+                        Menu.this.add(menu, BorderLayout.CENTER);
+                        Menu.this.repaint();
+                        Menu.this.validate();
+                    }
+                });
+                p.add(hsb, BorderLayout.SOUTH);
+                JTable t = new JTable(new DefaultTableModel(
+                                        new Vector<>(new HighScores().getHighScores()),
+                                        new Vector<>(new LinkedList<String>())));
+                p.add(t, BorderLayout.CENTER);
+                Menu.this.add(p, BorderLayout.CENTER);
+                System.out.println("Scorepanel added");
+                //Menu.this.repaint();
+                Menu.this.validate();
+            }
+        });
         menu.add(b);
 
         b = new JButton("Settings");
