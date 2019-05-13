@@ -22,7 +22,7 @@ public class TextFile
             for(int i = 0; i < highScores.size(); i++) {
                 String name = highScores.get(i).getName();
                 name = name.replace(":","ˇ");
-                pw.write(name + ":" +highScores.get(i).getScore());
+                pw.println(name + ":" +highScores.get(i).getScore());
             }
             pw.close();
         }

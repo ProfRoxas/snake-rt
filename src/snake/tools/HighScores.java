@@ -7,7 +7,7 @@ public class HighScores
     private ArrayList<PersonScore> highScores;
 
     public HighScores() {
-        highScores = new TextFile("./HighScore.json").read();
+        highScores = new TextFile("./HighScore.hsc").read();
     }
 
     public ArrayList<PersonScore> getHighScores() {
@@ -31,6 +31,6 @@ public class HighScores
     }
 
     public void save() {
-        new TextFile("./HighScore.json").write(highScores);
+        new TextFile("./HighScore.hsc").write(highScores);
     }
 }
