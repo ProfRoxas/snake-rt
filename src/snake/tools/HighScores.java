@@ -5,11 +5,9 @@ import java.util.ArrayList;
 public class HighScores
 {
     private ArrayList<PersonScore> highScores;
-    private JSONFile file;
 
     public HighScores() {
-        file = new JSONFile("HighScore.json");
-        highScores = file.readFromJSON();
+        highScores = new TextFile("./HighScore.json").read();
     }
 
     public ArrayList<PersonScore> getHighScores() {
@@ -33,6 +31,6 @@ public class HighScores
     }
 
     public void save() {
-        file.writeToJSON(highScores);
+        new TextFile("./HighScore.json").write(highScores);
     }
 }
