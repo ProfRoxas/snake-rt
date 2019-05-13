@@ -13,7 +13,6 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
@@ -30,10 +29,11 @@ public class Menu extends JPanel {
         
             @Override
             public void actionPerformed(ActionEvent e) {
-                Container rp = SwingUtilities.getRootPane(Menu.this).getContentPane();
+                Container rp = Menu.this.getRootPane().getContentPane();
                 rp.removeAll();
                 rp.add(g);
                 rp.revalidate();
+                SwingUtilities.getWindowAncestor(g).requestFocus();
             }
         });
         menu.add(b);
