@@ -12,11 +12,11 @@ import snake.tools.Logic;
 import snake.tools.Menu;
 import snake.tools.Settings;
 
-class Main extends JFrame {
+public class Main extends JFrame {
     private Logic __gameLogic;
-    private static Timer __timer;
+    private static Timer __logicTimer;
     private int __fps = 10;
-    private Runnable __timertask;
+    private Runnable __guiTask;
     private Gui g;
 
     public Main() {
@@ -33,12 +33,10 @@ class Main extends JFrame {
         setMinimumSize(Settings.getScreen());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        __gameLogic = new Logic();
-        g = new Gui(__gameLogic);
-        addKeyListener(new KeyEventListener(__gameLogic));
-        __timer = new Timer();
+        
+        __logicTimer = new Timer();
         // = new Thread();
-        __timertask = new Runnable(){
+        __guiTask = new Runnable(){
             
             @Override
             public void run() {
@@ -48,23 +46,42 @@ class Main extends JFrame {
                 //System.out.println("Updating GUI");
             }
         };
-        __timer.scheduleAtFixedRate(new TimerTask() {
-
-            @Override
-            public void run() {
-                __gameLogic.update();
-                //GUI Schedule for Thread Safety
-                EventQueue.invokeLater(__timertask);
-            }
-
-        }, 1000, 1000/__fps);
 
         Menu m = new Menu(g, __gameLogic);
         this.add(m);
         this.pack();
     }
-
+    public void setGame(Gui g, Logic l) {
+        this.g = g;
+        __gameLogic = l;
+        startTimer(1.0d);
+        addKeyListener(new KeyEventListener(__gameLogic));
+    }
     
+    private void startTimer(double rate) {
+        Double delay = (1000) * rate;
+        if(delay < 1.0d) delay = 1.0d; //! Can't schedule thread faster than 1ms
+        __logicTimer.scheduleAtFixedRate(new TimerTask() {
+            double newRate = rate;
+            @Override
+            public void run() {
+                if (__gameLogic == null) {
+                    //no use for thread if no logic, it starts anew when new logic is created
+                    this.cancel();
+                    return;}
+                if(rate != newRate) {
+                    this.cancel();
+                    startTimer(newRate);
+                }
+                newRate = __gameLogic.update();
+                //newRate = rate/1.1d;   //? Tested for acceleration and proper speed change
+
+                //GUI Schedule for Thread Safety
+                EventQueue.invokeLater(__guiTask);
+            }
+
+        }, delay.longValue(), delay.longValue());
+    }
 
     public static void main(String[] args) {
         new Main();

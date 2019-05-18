@@ -20,6 +20,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import snake.Main;
+
 public class Menu extends JPanel {
     private HighScores hs;
     private JPanel menu;
@@ -67,10 +69,13 @@ public class Menu extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 logic = new Logic();
                 gui = new Gui(logic);
+                
                 Container rp = Menu.this.getRootPane().getContentPane();
                 rp.removeAll();
                 rp.add(gui);
                 rp.revalidate();
+                Main m = (Main)SwingUtilities.getWindowAncestor(gui);
+                m.setGame(gui, logic);
                 SwingUtilities.getWindowAncestor(gui).requestFocus();
             }
         };
