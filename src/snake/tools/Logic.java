@@ -21,20 +21,23 @@ public class Logic{
     private boolean status = false;
     private TableMap map;
     private boolean paused = true;
+    private double speed;
+    private int score;
 
     public Logic() {
-        
         Point pm = Settings.getMapSize();
         snakeHead = new SnakeHead(0, 0, pm.x, pm.y);
         map = new TableMap(pm.x, pm.y, snakeHead, 3, 3);
+        speed = 1.0;
+        score = 0;
     }
 
     public TableMap getMap(){
         return map;
     }
 
-    public void update(){
-        if (paused || getOppositeDirection(nextDirection) == lastDirection) return;
+    public double update(){
+        if (paused || getOppositeDirection(nextDirection) == lastDirection) return speed;
         Point headPos = snakeHead.getLocation();
         map.remove(headPos);
         switch(nextDirection){
@@ -60,6 +63,12 @@ public class Logic{
             switch(tileEntity.getType()){
                 case BASICFRUIT:
                     body = snakeHead.move(nextDirection, true);
+                    score += 1;
+                    break;
+                case SPEEDUPFRUIT:
+                    body = snakeHead.move(nextDirection, true);
+                    score += 1;
+                    speedUp(0.2);
                     break;
                 default:
                     gameOver();
@@ -74,14 +83,17 @@ public class Logic{
         		map.remove(body[1].getLocation());	
         	}
         }
+        return speed;
+    }
+
+    public double getScore(){
+        return score;
     }
 
     public void setPaused(boolean toSet){
     	paused = toSet;
     }
 
-
-    //TODO: implement game over
     public void gameOver(){
     	paused = true;
         System.out.println("Game over!");
@@ -118,6 +130,27 @@ public class Logic{
 
     public void setNextDirection(Direction dir){
         nextDirection = dir;
+    }
+
+    public void speedUp(double add){
+        speed += add;
+    }
+
+    private void speedUpAndDown(double add){
+        speed += add;
+        new java.util.Timer().schedule( 
+            new java.util.TimerTask() {
+                @Override
+                public void run() {
+                    speedDown(add);
+                }
+            }, 
+            5000 
+        );
+    }
+
+    public void speedDown(double add){
+        speed -= add;
     }
 
     private Direction getOppositeDirection(Direction dir){
