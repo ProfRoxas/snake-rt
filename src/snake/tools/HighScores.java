@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class HighScores
 {
-    private ArrayList<PersonScore> highScores;
+    private static ArrayList<PersonScore> highScores;
 
-    public HighScores() {
+    static {
         highScores = new TextFile("./HighScore.hsc").read();
     }
 
-    public ArrayList<PersonScore> getHighScores() {
+    public static ArrayList<PersonScore> getHighScores() {
         return highScores;
     }
 
-    public void addNewHighScore(PersonScore player) {
+    public static void addNewHighScore(PersonScore player) {
         if(highScores.size() < 10) {
             highScores.add(player);
         }
@@ -30,7 +30,7 @@ public class HighScores
         }
     }
 
-    public void save() {
+    public static void save() {
         new TextFile("./HighScore.hsc").write(highScores);
     }
 }
