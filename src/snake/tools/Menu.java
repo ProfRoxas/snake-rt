@@ -9,8 +9,6 @@ import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -26,14 +24,14 @@ public class Menu extends JPanel {
     private HighScores hs;
     private JPanel menu;
 
-    public Menu(Gui g) {
+    public Menu(Gui g, Logic l) {
         hs = new HighScores();
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(320, 240));
         menu = new JPanel(new GridLayout(4, 1));
 
         JButton b = new JButton("New Game");
-        b.addActionListener(getNewGameListener(g));
+        b.addActionListener(getNewGameListener(g, l));
         menu.add(b);
 
         b = new JButton("High Scores");
@@ -61,11 +59,12 @@ public class Menu extends JPanel {
 
     }
 
-    private ActionListener getNewGameListener(Gui g) {
+    private ActionListener getNewGameListener(Gui g, Logic l) {
         return new ActionListener() {
-
+            private Logic logic;
             @Override
             public void actionPerformed(ActionEvent e) {
+                logic = new Logic();
                 Container rp = Menu.this.getRootPane().getContentPane();
                 rp.removeAll();
                 rp.add(g);
@@ -80,6 +79,7 @@ public class Menu extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                from.removeAll();
                 Menu.this.remove(from);
                 Menu.this.add(menu, BorderLayout.CENTER);
                 Menu.this.repaint();
@@ -118,10 +118,11 @@ public class Menu extends JPanel {
 
     private ActionListener getSettingsListener() {
         return new ActionListener() {
-            Point maps = Settings.getMapSize();
+            
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                Point maps = Settings.getMapSize();
                 JPanel p = new JPanel(new GridLayout(8, 1));
 
                 p.add(new JLabel("Width of the map (5-100)"));

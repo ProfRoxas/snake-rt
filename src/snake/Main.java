@@ -59,7 +59,7 @@ class Main extends JFrame {
 
         }, 1000, 1000/__fps);
 
-        Menu m = new Menu(g);
+        Menu m = new Menu(g, __gameLogic);
         this.add(m);
         this.pack();
     }
