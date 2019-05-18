@@ -62,14 +62,16 @@ public class Menu extends JPanel {
     private ActionListener getNewGameListener(Gui g, Logic l) {
         return new ActionListener() {
             private Logic logic;
+            private Gui gui;
             @Override
             public void actionPerformed(ActionEvent e) {
                 logic = new Logic();
+                gui = new Gui(logic);
                 Container rp = Menu.this.getRootPane().getContentPane();
                 rp.removeAll();
-                rp.add(g);
+                rp.add(gui);
                 rp.revalidate();
-                SwingUtilities.getWindowAncestor(g).requestFocus();
+                SwingUtilities.getWindowAncestor(gui).requestFocus();
             }
         };
     }
