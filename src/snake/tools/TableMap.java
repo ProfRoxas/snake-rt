@@ -147,6 +147,7 @@ public class TableMap {
                 break;
             case SPEEDUPFRUIT:
                 e = new Fruit(et, p);
+                break;
             default: e = null;
         }
         if(e == null) return null;
