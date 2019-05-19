@@ -1,10 +1,17 @@
 package snake;
 
+import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import snake.tools.Gui;
@@ -78,7 +85,23 @@ public class Main extends JFrame {
                 //newRate = rate/1.1d;   //? Tested for acceleration and proper speed change
                 if(newRate < 0) { //-1.0 -> Game over
                     Main.this.remove(Main.this.g);
-                    Main.this.add(new Menu());
+                    JPanel p = new JPanel(new GridLayout(4,1));
+                    p.add(new JLabel("Game over"));
+                    p.add(new JLabel("Player Name: "+Settings.getName()));
+                    p.add(new JLabel("Score: "+__gameLogic.getScore()));
+                    JButton b = new JButton("Return to Menu");
+                    b.addActionListener(new ActionListener(){
+                    
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            Main.this.remove(p);
+                            Main.this.add(new Menu());
+                            Main.this.repaint();
+                            Main.this.validate();
+                        }
+                    });
+                    p.add(b);
+                    Main.this.add(p);
                     Main.this.repaint();
                     Main.this.validate();
                     this.cancel();
