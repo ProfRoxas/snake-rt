@@ -137,17 +137,17 @@ public class Menu extends JPanel {
                 JTextField tf = new JTextField(Settings.getName());
                 p.add(tf);
 
-                p.add(new JLabel("Width of the map (5-20)"));
+                p.add(new JLabel("Width of the map (5-70)"));
                 JLabel lx = new JLabel("Current: " + maps.x);
                 p.add(lx);
-                JSlider sx = new JSlider(5, 20, maps.x);
+                JSlider sx = new JSlider(5, 70, maps.x);
                 sx.addChangeListener(getChangeListener(lx));
                 p.add(sx);
 
-                p.add(new JLabel("Height of the map(5-16)"));
+                p.add(new JLabel("Height of the map(5-50)"));
                 JLabel ly = new JLabel("Current: " + maps.y);
                 p.add(ly);
-                JSlider sy = new JSlider(5, 16, maps.y);
+                JSlider sy = new JSlider(5, 50, maps.y);
                 sy.addChangeListener(getChangeListener(ly));
                 p.add(sy);
 

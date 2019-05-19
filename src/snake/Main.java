@@ -39,8 +39,8 @@ public class Main extends JFrame {
         // add(__canvas);
 
         setTitle("Snake RT");
-        //setSize(Settings.getScreen());
-        //setMinimumSize(Settings.getScreen());
+        setSize(Settings.getScreen());
+        setMinimumSize(Settings.getScreen());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
