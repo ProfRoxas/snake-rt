@@ -73,7 +73,7 @@ public class Logic{
                 	map.remove(headPos);
                 	pickedUpFruit = true;
                     body = snakeHead.move(nextDirection, true);
-                    score += 1;
+                    score += Settings.getSpeed();
                     break;
                 default:
                     gameOver();
