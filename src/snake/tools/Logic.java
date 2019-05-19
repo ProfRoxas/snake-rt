@@ -29,7 +29,7 @@ public class Logic{
     public Logic() {
         Point pm = Settings.getMapSize();
         snakeHead = new SnakeHead(0, 0, pm.x, pm.y);
-        map = new TableMap(pm.x, pm.y, snakeHead, 3, 3);
+        map = new TableMap(pm.x, pm.y, snakeHead, Settings.getWalls(), Settings.getSeed());
         speed = 1.0;
         score = 0;
         map.spawnEntity(EntityTypes.BASICFRUIT);
