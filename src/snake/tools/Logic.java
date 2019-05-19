@@ -64,18 +64,16 @@ public class Logic{
 
         Entity tileEntity = map.get(headPos);
         SnakeBody[] body = null;
+        boolean pickedUpFruit = false;
         if (tileEntity != null) {
             switch(tileEntity.getType()){
             	case SPEEDUPFRUIT:
                     speedUp(0.2);
                 case BASICFRUIT:
+                	map.remove(headPos);
+                	pickedUpFruit = true;
                     body = snakeHead.move(nextDirection, true);
                     score += 1;
-                    if(rand.nextInt(100)<15){
-                        map.spawnEntity(EntityTypes.SPEEDUPFRUIT); 
-                    }else{
-                        map.spawnEntity(EntityTypes.BASICFRUIT);
-                    }
                     break;
                 default:
                     gameOver();
@@ -88,6 +86,13 @@ public class Logic{
         	map.place(body[0]);
         	if (body[1] != null) {
         		map.remove(body[1].getLocation());	
+        	}
+        	if (pickedUpFruit) {
+	            if(rand.nextInt(100)<15){
+	                map.spawnEntity(EntityTypes.SPEEDUPFRUIT); 
+	            }else{
+	                map.spawnEntity(EntityTypes.BASICFRUIT);
+	            }	
         	}
         }
         return speed;
