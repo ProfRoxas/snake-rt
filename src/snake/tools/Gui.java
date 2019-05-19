@@ -1,6 +1,8 @@
 package snake.tools;
 
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -56,22 +58,22 @@ public class Gui extends JPanel {
             Point point = new Point();
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
-                    JLabel label = new JLabel();
+                    ImagePanel label = new ImagePanel();
                     point.move(j,i);
                     if(__gameLogic.getMap().get(point) == null){
-                        label.setIcon(groundIcon);
+                        label.changeImage(groundIcon);
                     }else if(   __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKEBODY ||
                         __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKETAIL ||
                         __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKEHEAD){
-                        label.setIcon(snakeIcon);
+                        label.changeImage(snakeIcon);
                     }else if(__gameLogic.getMap().get(point).getType() == EntityTypes.WALL){
-                        label.setIcon(wallIcon);
+                        label.changeImage(wallIcon);
                     } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.BASICFRUIT){
-                        label.setIcon(fruitIcon);
+                        label.changeImage(fruitIcon);
                     } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.SPEEDUPFRUIT){
-                        label.setIcon(fastIcon);
+                        label.changeImage(fastIcon);
                     } else{
-                        label.setIcon(unknownIcon);
+                        label.changeImage(unknownIcon);
                     }
                     this.add(label, point);
                 }
@@ -86,25 +88,38 @@ public class Gui extends JPanel {
         Point point = new Point();
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                JLabel label = (JLabel)this.getComponent(j*x + i);
+                ImagePanel label = (ImagePanel)this.getComponent(j*x + i);
                 point.move(i,j);
                 if(__gameLogic.getMap().get(point) == null){
-                    label.setIcon(groundIcon);
+                    label.changeImage(groundIcon);
                 }else if(   __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKEBODY ||
                     __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKETAIL ||
                     __gameLogic.getMap().get(point).getType() == EntityTypes.FATSNAKEBODY ||
                     __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKEHEAD){
-                    label.setIcon(snakeIcon);
+                    label.changeImage(snakeIcon);
                 }else if(__gameLogic.getMap().get(point).getType() == EntityTypes.WALL){
-                    label.setIcon(wallIcon);
+                    label.changeImage(wallIcon);
                 } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.BASICFRUIT){
-                    label.setIcon(fruitIcon);
+                    label.changeImage(fruitIcon);
                 } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.SPEEDUPFRUIT){
-                    label.setIcon(fastIcon);
+                    label.changeImage(fastIcon);
                 } else{
-                    label.setIcon(unknownIcon);
+                    label.changeImage(unknownIcon);
                 }
             }
         }
+    }
+}
+
+class ImagePanel extends JPanel {
+    private Image img;
+    public void changeImage(ImageIcon bi) {
+        img = bi.getImage();
+    }
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
     }
 }
