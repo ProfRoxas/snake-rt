@@ -41,6 +41,10 @@ public class Logic{
     }
 
     public double update(){
+        if(exit) {
+            gameOver();
+            return -1;
+        }
         if (paused ) return speed;
         Point headPos = snakeHead.getLocation();
         map.remove(headPos);
@@ -66,11 +70,7 @@ public class Logic{
         Entity tileEntity = map.get(headPos);
         SnakeBody[] body = null;
         boolean pickedUpFruit = false;
-        if (tileEntity != null || exit) {
-            if(exit) {
-                gameOver();
-                return -1;
-            }
+        if (tileEntity != null) {
             switch(tileEntity.getType()){
                 case SPEEDUPFRUIT:
                     speedUpAndDown(0.2);
