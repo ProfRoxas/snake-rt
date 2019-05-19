@@ -13,12 +13,12 @@ The ultimate goal is building a multiplayer feature and add more, like hunger mo
 
 # Controls
     
--Press Enter to start a game.
--Use the cursors to go to the intended direction.
+-Press Enter to start a game.    
+-Use the cursors to go to the intended direction.    
 -Press Esc to go back to the menu (this ends the current game).
 
 # Current Game Guide
 
-Eat apples to get points (as many as your current speed).
-If you eat the lightning the snake will go faster by 5 seconds (beware it stacks).
+Eat apples to get points (as many as your current speed).    
+If you eat the lightning the snake will go faster by 5 seconds (beware it stacks).    
 Avoid walls and the snake body parts.
