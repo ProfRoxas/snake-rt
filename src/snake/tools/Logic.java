@@ -17,18 +17,19 @@ import java.util.Random;
 public class Logic{
 
     private SnakeHead snakeHead;
-    private Direction nextDirection = Direction.UP;
-    private Direction lastDirection = Direction.UP;
+    private Direction nextDirection = Direction.LEFT;
+    private Direction lastDirection = Direction.LEFT;
     private boolean status = false;
     private TableMap map;
     private boolean paused = true;
+    private boolean exit = false;
     private double speed;
     private int score;
     private Random rand = new Random();
 
     public Logic() {
         Point pm = Settings.getMapSize();
-        snakeHead = new SnakeHead(0, 0, pm.x, pm.y);
+        snakeHead = new SnakeHead((int)Settings.getMapSize().getX()/2-2, (int)Settings.getMapSize().getY()/2-1, pm.x, pm.y);
         map = new TableMap(pm.x, pm.y, snakeHead, Settings.getWalls(), Settings.getSeed());
         speed = 1.0;
         score = 0;
@@ -65,10 +66,14 @@ public class Logic{
         Entity tileEntity = map.get(headPos);
         SnakeBody[] body = null;
         boolean pickedUpFruit = false;
-        if (tileEntity != null) {
+        if (tileEntity != null || exit) {
+            if(exit) {
+                gameOver();
+                return -1;
+            }
             switch(tileEntity.getType()){
-            	case SPEEDUPFRUIT:
-                    speedUp(0.2);
+                case SPEEDUPFRUIT:
+                    speedUpAndDown(0.2);
                 case BASICFRUIT:
                 	map.remove(headPos);
                 	pickedUpFruit = true;
@@ -105,6 +110,10 @@ public class Logic{
 
     public void setPaused(boolean toSet){
     	paused = toSet;
+    }
+
+    public void setExit(boolean toSet) {
+        exit = toSet;
     }
 
     public void gameOver(){

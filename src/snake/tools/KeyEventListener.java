@@ -20,6 +20,9 @@ public class KeyEventListener implements KeyListener{
             }else if(__code == KeyEvent.VK_ENTER){
                 logic.setPaused(false);
             }
+            else if(__code == KeyEvent.VK_ESCAPE) {
+                logic.setExit(true);
+            }
     }
 
     /** Handle the key released event. */
