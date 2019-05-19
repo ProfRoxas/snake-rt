@@ -26,7 +26,7 @@ public class Fruit implements Entity {
      * @throws InvalidParameterException When the Type is not valid
      */
     public Fruit(EntityTypes ft, Point p) {
-        if(ft != EntityTypes.BASICFRUIT)
+        if(ft != EntityTypes.BASICFRUIT || ft != EntityTypes.SPEEDUPFRUIT)
             throw new InvalidParameterException("Fruit type is not valid");
         __type = ft;
         __location = p;
