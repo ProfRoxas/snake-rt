@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.Point;
+import java.util.Random;
 
 
 public class Logic{
@@ -23,6 +24,7 @@ public class Logic{
     private boolean paused = true;
     private double speed;
     private int score;
+    private Random rand = new Random();
 
     public Logic() {
         Point pm = Settings.getMapSize();
@@ -30,6 +32,7 @@ public class Logic{
         map = new TableMap(pm.x, pm.y, snakeHead, 3, 3);
         speed = 1.0;
         score = 0;
+        map.spawnEntity(EntityTypes.BASICFRUIT);
     }
 
     public TableMap getMap(){
@@ -59,16 +62,27 @@ public class Logic{
         Entity tileEntity = map.get(headPos);
         SnakeBody[] body = null;
         if (tileEntity != null) {
-            //implemented with switch for future use, its ugly, i get it
             switch(tileEntity.getType()){
                 case BASICFRUIT:
                     body = snakeHead.move(nextDirection, true);
                     score += 1;
+                    if(rand.nextInt(100)<15){
+                        map.spawnEntity(EntityTypes.BASICFRUIT);
+                        //map.spawnEntity(EntityTypes.SPEEDUPFRUIT); //TODO:Fix if the other thingy is fixed
+                    }else{
+                        map.spawnEntity(EntityTypes.BASICFRUIT);
+                    }
                     break;
                 case SPEEDUPFRUIT:
                     body = snakeHead.move(nextDirection, true);
                     score += 1;
                     speedUp(0.2);
+                    if(rand.nextInt(100)<15){
+                        map.spawnEntity(EntityTypes.BASICFRUIT);
+                        //map.spawnEntity(EntityTypes.SPEEDUPFRUIT);
+                    }else{
+                        map.spawnEntity(EntityTypes.BASICFRUIT);
+                    }
                     break;
                 default:
                     gameOver();
