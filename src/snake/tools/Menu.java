@@ -27,14 +27,14 @@ public class Menu extends JPanel {
     private HighScores hs;
     private JPanel menu;
 
-    public Menu(Gui g, Logic l) {
+    public Menu() {
         hs = new HighScores();
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(320, 240));
         menu = new JPanel(new GridLayout(4, 1));
 
         JButton b = new JButton("New Game");
-        b.addActionListener(getNewGameListener(g, l));
+        b.addActionListener(getNewGameListener());
         menu.add(b);
 
         b = new JButton("High Scores");
@@ -62,7 +62,7 @@ public class Menu extends JPanel {
 
     }
 
-    private ActionListener getNewGameListener(Gui g, Logic l) {
+    private ActionListener getNewGameListener() {
         return new ActionListener() {
             private Logic logic;
             private Gui gui;
@@ -130,7 +130,7 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Point maps = Settings.getMapSize();
-                JPanel p = new JPanel(new GridLayout(12, 1));
+                JPanel p = new JPanel(new GridLayout(15, 1));
 
                 p.add(new JLabel("UserName:"));
                 JTextField tf = new JTextField(Settings.getName());

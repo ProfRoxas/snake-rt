@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import snake.tools.Gui;
 import snake.tools.KeyEventListener;
@@ -47,7 +48,7 @@ public class Main extends JFrame {
             }
         };
 
-        Menu m = new Menu(g, __gameLogic);
+        Menu m = new Menu();
         this.add(m);
         this.pack();
     }
@@ -75,7 +76,14 @@ public class Main extends JFrame {
                 }
                 newRate = __gameLogic.update();
                 //newRate = rate/1.1d;   //? Tested for acceleration and proper speed change
-
+                if(newRate < 0) { //-1.0 -> Game over
+                    Main.this.remove(Main.this.g);
+                    Main.this.add(new Menu());
+                    Main.this.repaint();
+                    Main.this.validate();
+                    this.cancel();
+                }
+                System.out.println(newRate);
                 //GUI Schedule for Thread Safety
                 EventQueue.invokeLater(__guiTask);
             }
