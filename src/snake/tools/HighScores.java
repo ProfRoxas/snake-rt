@@ -17,15 +17,17 @@ public class HighScores
     public static void addNewHighScore(PersonScore player) {
         if(highScores.size() < 10) {
             highScores.add(player);
+            save();
         }
         else {
         int i = 9;
             if(player.getScore() > highScores.get(i).getScore()) {
-               while(i-1 >= 0 && player.getScore() > highScores.get(i-1).getScore()) {
+                while(i-1 >= 0 && player.getScore() > highScores.get(i-1).getScore()) {
                     i--;
-               }
-             highScores.add(i, player);
+                }
+                highScores.add(i, player);
                 highScores.remove(10);
+                save();
             }
         }
     }
