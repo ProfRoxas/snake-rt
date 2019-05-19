@@ -20,7 +20,7 @@ public class Settings {
     //TODO: Remake with Property Object
     private static int __x = 10;
     private static int __y = 10;
-    private static int __seed = new Random().nextInt();
+    private static Integer __seed;
     private static int __walls = 3;
     private static int __h = 480;
     private static int __w = 640;
@@ -82,6 +82,7 @@ public class Settings {
      * Get the seed of the Map
      */
     public static int getSeed() {
+        if(__seed == null) return new Random().nextInt();
         return __seed;
     }
 
