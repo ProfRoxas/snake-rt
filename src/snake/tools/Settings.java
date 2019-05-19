@@ -168,6 +168,7 @@ public class Settings {
         __y = Integer.parseInt(p.getProperty("Map_Height", "10"));
         __walls = Integer.parseInt(p.getProperty("Wall_Count", "3"));
         __name = p.getProperty("User_Name", "Player1");
+        __speed = Integer.parseInt(p.getProperty("Game_Speed", "10"));
     }
     private static void saveSetting() {
         Properties p = new Properties();
@@ -177,6 +178,7 @@ public class Settings {
             p.setProperty("Map_Height", __y+"");
             p.setProperty("User_Name", __name);
             p.setProperty("Wall_Count", __walls+"");
+            p.setProperty("Game_Speed", __speed+"");
 
             p.save(os, "Snake Settings File");
             System.out.println("Saving settings");
