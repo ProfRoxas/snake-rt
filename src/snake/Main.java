@@ -59,7 +59,7 @@ public class Main extends JFrame {
     }
     
     private void startTimer(double rate) {
-        Double delay = (1000) * rate;
+        Double delay = (1000/Settings.getSpeed()) * rate;
         if(delay < 1.0d) delay = 1.0d; //! Can't schedule thread faster than 1ms
         __logicTimer.scheduleAtFixedRate(new TimerTask() {
             double newRate = rate;
