@@ -9,8 +9,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -84,27 +86,17 @@ public class Main extends JFrame {
                 newRate = __gameLogic.update();
                 //newRate = rate/1.1d;   //? Tested for acceleration and proper speed change
                 if(newRate < 0) { //-1.0 -> Game over
+                    this.cancel();
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("Player Name: ").append(Settings.getName()).append("\n");
+                    sb.append("Score: ").append(__gameLogic.getScore());
+
+                    JOptionPane.showMessageDialog(Main.this, sb.toString(), "Game Over", JOptionPane.PLAIN_MESSAGE);
                     Main.this.remove(Main.this.g);
-                    JPanel p = new JPanel(new GridLayout(4,1));
-                    p.add(new JLabel("Game over"));
-                    p.add(new JLabel("Player Name: "+Settings.getName()));
-                    p.add(new JLabel("Score: "+__gameLogic.getScore()));
-                    JButton b = new JButton("Return to Menu");
-                    b.addActionListener(new ActionListener(){
-                    
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            Main.this.remove(p);
-                            Main.this.add(new Menu());
-                            Main.this.repaint();
-                            Main.this.validate();
-                        }
-                    });
-                    p.add(b);
-                    Main.this.add(p);
+                    Main.this.add(new Menu());
                     Main.this.repaint();
                     Main.this.validate();
-                    this.cancel();
+                    
                 }
                 System.out.println(newRate);
                 //GUI Schedule for Thread Safety
