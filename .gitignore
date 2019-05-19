@@ -23,6 +23,7 @@
 hs_err_pid*
 *.code-workspace
 *.hsc
+settings.ini
 
 #
 # Standard Maven .gitignore

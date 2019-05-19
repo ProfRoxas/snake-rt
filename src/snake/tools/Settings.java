@@ -2,7 +2,11 @@ package snake.tools;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 import java.util.Random;
 
@@ -12,7 +16,7 @@ import java.util.Random;
  * The class preserves the settings in a .ini file
  */
 public class Settings {
-
+    //TODO: Remake with Property Object
     private static int __x = 10;
     private static int __y = 10;
     private static int __seed = new Random().nextInt();
@@ -53,6 +57,7 @@ public class Settings {
     public static void setMapSize(int x, int y) {
         __x = x;
         __y = y;
+        saveSetting();
     }
 
     /**
@@ -69,6 +74,7 @@ public class Settings {
      */
     public static void setSeed(int s) {
         __seed = s;
+        saveSetting();
     }
 
     /** 
@@ -84,6 +90,7 @@ public class Settings {
      */
     public static void setSpeed(int s) {
         __speed = s;
+        saveSetting();
     }
 
     /** 
@@ -100,6 +107,7 @@ public class Settings {
 
     public static void setName(String n) {
         __name = n;
+        saveSetting();
     }
 
     /** 
@@ -115,6 +123,7 @@ public class Settings {
      */
     public static void setWalls(int wc) {
         __walls = wc;
+        saveSetting();
     }
 
     /**
@@ -132,6 +141,7 @@ public class Settings {
         //not the best but works
         __h = (int)(d.getHeight());
         __w = (int)(d.getWidth());
+        saveSetting();
     }
 
     /**
@@ -156,5 +166,21 @@ public class Settings {
         __x = Integer.parseInt(p.getProperty("Map_Width", "10"));
         __y = Integer.parseInt(p.getProperty("Map_Height", "10"));
         __seed = Integer.parseInt(p.getProperty("Map_Seed", "10"));
+    }
+    private static void saveSetting() {
+        Properties p = new Properties();
+        
+        try(OutputStream os = new FileOutputStream("./settings.ini")) {
+            p.setProperty("Map_Width", __x+"");
+            p.setProperty("Map_Height", __y+"");
+            p.setProperty("User_Name", __name);
+            p.setProperty("Wall_Count", __walls+"");
+
+            p.save(os, "Snake Settings File");
+            System.out.println("Saving settings");
+        }catch (IOException e) {
+            //?shouldnt happen
+            e.printStackTrace();
+        }
     }
 }
