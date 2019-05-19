@@ -157,8 +157,15 @@ public class Menu extends JPanel {
                 sw.addChangeListener(getChangeListener(lw));
                 p.add(sw);
 
+                p.add(new JLabel("Speed of the game (1-10)"));
+                JLabel ls = new JLabel("Current: " + Settings.getSpeed());
+                p.add(ls);
+                JSlider ss = new JSlider(1, 10, Settings.getSpeed());
+                ss.addChangeListener(getChangeListener(ls));
+                p.add(ss);
+
                 JButton b = new JButton("Save and Return");
-                b.addActionListener(getSaveListener(sx, sy, sw, tf));
+                b.addActionListener(getSaveListener(sx, sy, sw, ss, tf));
                 b.addActionListener(getReturnToMenuListener(p));
                 p.add(b);
 
@@ -169,13 +176,14 @@ public class Menu extends JPanel {
         };
     }
 
-    private ActionListener getSaveListener(JSlider x, JSlider y, JSlider w, JTextField tf) {
+    private ActionListener getSaveListener(JSlider x, JSlider y, JSlider w, JSlider s, JTextField tf) {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Saving: x=" + x.getValue() + ", y=" + y.getValue());
                 Settings.setMapSize(x.getValue(), y.getValue());
                 Settings.setName(tf.getText());
+                Settings.setSpeed(s.getValue());
 
                 int max = x.getValue()*y.getValue()/5;
                 int wall = w.getValue();
