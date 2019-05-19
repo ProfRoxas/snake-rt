@@ -18,6 +18,9 @@ public class Gui extends JPanel {
     private ImageIcon groundIcon;
     private ImageIcon snakeIcon;
     private ImageIcon wallIcon;
+    private ImageIcon fastIcon;
+    private ImageIcon slowIcon;
+    private ImageIcon unknownIcon;
     private Logic __gameLogic;
     private int x;
     private int y;
@@ -31,6 +34,12 @@ public class Gui extends JPanel {
         try {
             InputStream url = this.getClass().getResourceAsStream("/fruit.png");
             BufferedImage fruitImg = ImageIO.read(url);
+            url = this.getClass().getResourceAsStream("/fruit_fast.png");
+            BufferedImage fastImg = ImageIO.read(url);
+            url = this.getClass().getResourceAsStream("/fruit_slow.png");
+            BufferedImage slowImg = ImageIO.read(url);
+            url = this.getClass().getResourceAsStream("/what.png");
+            BufferedImage unknownImg = ImageIO.read(url);
             url = this.getClass().getResourceAsStream("/ground.PNG");
             BufferedImage groundImg = ImageIO.read(url);
             url = this.getClass().getResourceAsStream("/snake.PNG");
@@ -41,6 +50,9 @@ public class Gui extends JPanel {
             groundIcon = new ImageIcon(groundImg);
             snakeIcon = new ImageIcon(snakeImg);
             wallIcon = new ImageIcon(wallImg);
+            slowIcon = new ImageIcon(slowImg);
+            fastIcon = new ImageIcon(fastImg);
+            unknownIcon = new ImageIcon(unknownImg);
             Point point = new Point();
             for (int i = 0; i < x; i++) {
                 for (int j = 0; j < y; j++) {
@@ -50,13 +62,16 @@ public class Gui extends JPanel {
                         label.setIcon(groundIcon);
                     }else if(   __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKEBODY ||
                         __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKETAIL ||
-                        __gameLogic.getMap().get(point).getType() == EntityTypes.FATSNAKEBODY ||
                         __gameLogic.getMap().get(point).getType() == EntityTypes.SNAKEHEAD){
                         label.setIcon(snakeIcon);
                     }else if(__gameLogic.getMap().get(point).getType() == EntityTypes.WALL){
                         label.setIcon(wallIcon);
                     } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.BASICFRUIT){
                         label.setIcon(fruitIcon);
+                    } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.SPEEDUPFRUIT){
+                        label.setIcon(fastIcon);
+                    } else{
+                        label.setIcon(unknownIcon);
                     }
                     this.add(label, point);
                 }
@@ -84,6 +99,10 @@ public class Gui extends JPanel {
                     label.setIcon(wallIcon);
                 } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.BASICFRUIT){
                     label.setIcon(fruitIcon);
+                } else if(__gameLogic.getMap().get(point).getType() == EntityTypes.SPEEDUPFRUIT){
+                    label.setIcon(fastIcon);
+                } else{
+                    label.setIcon(unknownIcon);
                 }
             }
         }
