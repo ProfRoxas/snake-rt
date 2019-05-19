@@ -1,20 +1,13 @@
 package snake;
 
-import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.EventQueue;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import snake.tools.Gui;
 import snake.tools.KeyEventListener;
@@ -39,8 +32,8 @@ public class Main extends JFrame {
         // add(__canvas);
 
         setTitle("Snake RT");
-        setSize(Settings.getScreen());
-        setMinimumSize(Settings.getScreen());
+        //setSize(Settings.getScreen());
+        //setMinimumSize(Settings.getScreen());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -67,6 +60,18 @@ public class Main extends JFrame {
         startTimer(1.0d);
         addKeyListener(new KeyEventListener(__gameLogic));
         pack();
+
+        int x = Settings.getMapSize().x;
+        int y = Settings.getMapSize().y;
+        Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = (screen.getWidth()*0.8)/x;
+        double height = (screen.getHeight()*0.8)/y;
+        Double blocksize = width<height?width:height;
+        Dimension size = new Dimension(x*blocksize.intValue(), y*blocksize.intValue());
+        setPreferredSize(size);
+        
+        setSize(size);
+        setLocationRelativeTo(null);
     }
     
     private void startTimer(double rate) {
@@ -95,6 +100,7 @@ public class Main extends JFrame {
                     JOptionPane.showMessageDialog(Main.this, sb.toString(), "Game Over", JOptionPane.PLAIN_MESSAGE);
                     Main.this.remove(Main.this.g);
                     Main.this.add(new Menu());
+                    Main.this.setPreferredSize(null);
                     Main.this.repaint();
                     Main.this.validate();
                     Main.this.pack();
