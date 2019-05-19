@@ -24,11 +24,9 @@ import javax.swing.event.ChangeListener;
 import snake.Main;
 
 public class Menu extends JPanel {
-    private HighScores hs;
     private JPanel menu;
 
     public Menu() {
-        hs = new HighScores();
         this.setLayout(new BorderLayout());
         this.setMinimumSize(new Dimension(320, 240));
         menu = new JPanel(new GridLayout(4, 1));
@@ -105,7 +103,7 @@ public class Menu extends JPanel {
                 JButton hsb = new JButton("Return");
                 hsb.addActionListener(getReturnToMenuListener(p));
                 p.add(hsb, BorderLayout.SOUTH);
-                List<PersonScore> l = hs.getHighScores();
+                List<PersonScore> l = HighScores.getHighScores();
                 Object o[][] = new Object[l.size()][];
                 int i = 0;
                 for (PersonScore ps : l) {
@@ -116,6 +114,7 @@ public class Menu extends JPanel {
                 // ! My Precious
 
                 p.add(t, BorderLayout.CENTER);
+                p.add(t.getTableHeader(), BorderLayout.NORTH);
                 Menu.this.add(p, BorderLayout.CENTER);
                 // Menu.this.repaint();
                 Menu.this.validate();
