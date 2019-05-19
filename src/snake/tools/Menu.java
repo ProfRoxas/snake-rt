@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -91,7 +92,6 @@ public class Menu extends JPanel {
                 Menu.this.add(menu, BorderLayout.CENTER);
                 Menu.this.repaint();
                 Menu.this.validate();
-                hs.save();
             }
         };
     }
@@ -130,7 +130,11 @@ public class Menu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Point maps = Settings.getMapSize();
-                JPanel p = new JPanel(new GridLayout(8, 1));
+                JPanel p = new JPanel(new GridLayout(12, 1));
+
+                p.add(new JLabel("UserName:"));
+                JTextField tf = new JTextField(Settings.getName());
+                p.add(tf);
 
                 p.add(new JLabel("Width of the map (5-100)"));
                 JLabel lx = new JLabel("Current: " + maps.x);
@@ -146,10 +150,15 @@ public class Menu extends JPanel {
                 sy.addChangeListener(getChangeListener(ly));
                 p.add(sy);
 
-                JButton b = new JButton("Save");
-                b.addActionListener(getSaveListener(sx, sy));
-                p.add(b);
-                b = new JButton("Return");
+                p.add(new JLabel("Number of walls (0-100) (max 20% of tiles)"));
+                JLabel lw = new JLabel("Current: " + Settings.getWalls());
+                p.add(lw);
+                JSlider sw = new JSlider(0, 100, Settings.getWalls());
+                sw.addChangeListener(getChangeListener(lw));
+                p.add(sw);
+
+                JButton b = new JButton("Save and Return");
+                b.addActionListener(getSaveListener(sx, sy, sw, tf));
                 b.addActionListener(getReturnToMenuListener(p));
                 p.add(b);
 
@@ -160,12 +169,18 @@ public class Menu extends JPanel {
         };
     }
 
-    private ActionListener getSaveListener(JSlider x, JSlider y) {
+    private ActionListener getSaveListener(JSlider x, JSlider y, JSlider w, JTextField tf) {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Saving: x=" + x.getValue() + ", y=" + y.getValue());
                 Settings.setMapSize(x.getValue(), y.getValue());
+                Settings.setName(tf.getText());
+
+                int max = x.getValue()*y.getValue()/5;
+                int wall = w.getValue();
+                Settings.setWalls(wall>max?max:wall);
+                System.out.println("Walls: "+Settings.getWalls());
             }
         };
 

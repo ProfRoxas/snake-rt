@@ -2,6 +2,7 @@ package snake.tools;
 
 import java.awt.Dimension;
 import java.awt.Point;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -24,13 +25,13 @@ public class Settings {
     private static int __h = 480;
     private static int __w = 640;
     private static String __name = "Player1";
-    private static int __speed = 10;
+    private static int __speed = 5;
     /**
      * Loads the settings.ini at initialization, if exists, otherwise use the initial parameters
      */
     static {
         try {
-            InputStream f = Settings.class.getResourceAsStream("./settings.ini");
+            InputStream f = new FileInputStream("./settings.ini");
             if(f!=null)
                 readSettings(f);
                 //internal variables have their values already assigned, so only the new ones from the ini gets overriden
@@ -165,7 +166,8 @@ public class Settings {
         //TODO: Add more possible settings parameter
         __x = Integer.parseInt(p.getProperty("Map_Width", "10"));
         __y = Integer.parseInt(p.getProperty("Map_Height", "10"));
-        __seed = Integer.parseInt(p.getProperty("Map_Seed", "10"));
+        __walls = Integer.parseInt(p.getProperty("Wall_Count", "3"));
+        __name = p.getProperty("User_Name", "Player1");
     }
     private static void saveSetting() {
         Properties p = new Properties();
