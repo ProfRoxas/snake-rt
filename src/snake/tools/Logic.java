@@ -40,9 +40,12 @@ public class Logic{
     }
 
     public double update(){
-        if (paused || getOppositeDirection(nextDirection) == lastDirection) return speed;
+        if (paused ) return speed;
         Point headPos = snakeHead.getLocation();
         map.remove(headPos);
+        if (getOppositeDirection(nextDirection) == lastDirection) {
+        	nextDirection = lastDirection;
+        }
         switch(nextDirection){
             case UP:
                 headPos.translate(0, -1);
@@ -63,23 +66,13 @@ public class Logic{
         SnakeBody[] body = null;
         if (tileEntity != null) {
             switch(tileEntity.getType()){
+            	case SPEEDUPFRUIT:
+                    speedUp(0.2);
                 case BASICFRUIT:
                     body = snakeHead.move(nextDirection, true);
                     score += 1;
                     if(rand.nextInt(100)<15){
-                        map.spawnEntity(EntityTypes.BASICFRUIT);
-                        //map.spawnEntity(EntityTypes.SPEEDUPFRUIT); //TODO:Fix if the other thingy is fixed
-                    }else{
-                        map.spawnEntity(EntityTypes.BASICFRUIT);
-                    }
-                    break;
-                case SPEEDUPFRUIT:
-                    body = snakeHead.move(nextDirection, true);
-                    score += 1;
-                    speedUp(0.2);
-                    if(rand.nextInt(100)<15){
-                        map.spawnEntity(EntityTypes.BASICFRUIT);
-                        //map.spawnEntity(EntityTypes.SPEEDUPFRUIT);
+                        map.spawnEntity(EntityTypes.SPEEDUPFRUIT); 
                     }else{
                         map.spawnEntity(EntityTypes.BASICFRUIT);
                     }
@@ -109,6 +102,8 @@ public class Logic{
     }
 
     public void gameOver(){
+    	map.place(snakeHead);
+    	HighScores.addNewHighScore(new PersonScore(Settings.getName(), score));
     	paused = true;
         System.out.println("Game over!");
     }
