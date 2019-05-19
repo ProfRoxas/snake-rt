@@ -39,8 +39,8 @@ public class Main extends JFrame {
         // add(__canvas);
 
         setTitle("Snake RT");
-        setSize(Settings.getScreen());
-        setMinimumSize(Settings.getScreen());
+        //setSize(Settings.getScreen());
+        //setMinimumSize(Settings.getScreen());
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
@@ -66,6 +66,7 @@ public class Main extends JFrame {
         __gameLogic = l;
         startTimer(1.0d);
         addKeyListener(new KeyEventListener(__gameLogic));
+        pack();
     }
     
     private void startTimer(double rate) {
@@ -96,7 +97,7 @@ public class Main extends JFrame {
                     Main.this.add(new Menu());
                     Main.this.repaint();
                     Main.this.validate();
-                    
+                    Main.this.pack();
                 }
                 System.out.println(newRate);
                 //GUI Schedule for Thread Safety

@@ -56,7 +56,7 @@ public class Menu extends JPanel {
 
         this.add(menu, BorderLayout.CENTER);
         this.add(new JLabel("Made for ELTE Project Tools Course @ 2019"), BorderLayout.SOUTH);
-        this.add(new JLabel("[PUT LOGO HERE]"), BorderLayout.NORTH);
+        //this.add(new JLabel("[PUT LOGO HERE]"), BorderLayout.NORTH);
 
     }
 
@@ -90,6 +90,7 @@ public class Menu extends JPanel {
                 Menu.this.add(menu, BorderLayout.CENTER);
                 Menu.this.repaint();
                 Menu.this.validate();
+                SwingUtilities.getWindowAncestor(Menu.this).pack();
             }
         };
     }
@@ -118,6 +119,7 @@ public class Menu extends JPanel {
                 Menu.this.add(p, BorderLayout.CENTER);
                 // Menu.this.repaint();
                 Menu.this.validate();
+                SwingUtilities.getWindowAncestor(Menu.this).pack();
             }
         };
     }
@@ -135,17 +137,17 @@ public class Menu extends JPanel {
                 JTextField tf = new JTextField(Settings.getName());
                 p.add(tf);
 
-                p.add(new JLabel("Width of the map (5-100)"));
+                p.add(new JLabel("Width of the map (5-20)"));
                 JLabel lx = new JLabel("Current: " + maps.x);
                 p.add(lx);
-                JSlider sx = new JSlider(5, 100, maps.x);
+                JSlider sx = new JSlider(5, 20, maps.x);
                 sx.addChangeListener(getChangeListener(lx));
                 p.add(sx);
 
-                p.add(new JLabel("Height of the map(5-100)"));
+                p.add(new JLabel("Height of the map(5-16)"));
                 JLabel ly = new JLabel("Current: " + maps.y);
                 p.add(ly);
-                JSlider sy = new JSlider(5, 100, maps.y);
+                JSlider sy = new JSlider(5, 16, maps.y);
                 sy.addChangeListener(getChangeListener(ly));
                 p.add(sy);
 
@@ -171,6 +173,7 @@ public class Menu extends JPanel {
                 Menu.this.remove(menu);
                 Menu.this.add(p);
                 Menu.this.validate();
+                SwingUtilities.getWindowAncestor(Menu.this).pack();
             }
         };
     }
