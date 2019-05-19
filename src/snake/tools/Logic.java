@@ -77,6 +77,7 @@ public class Logic{
                     break;
                 default:
                     gameOver();
+                    return -1;
             }
         }else{
             body = snakeHead.move(nextDirection, false);
