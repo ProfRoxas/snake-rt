@@ -2,10 +2,7 @@ package snake.tools;
 
 import java.awt.Dimension;
 import java.awt.Point;
-import java.io.File;
-import java.io.FileReader;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.Properties;
 import java.util.Random;
 
@@ -22,12 +19,14 @@ public class Settings {
     private static int __walls = 3;
     private static int __h = 480;
     private static int __w = 640;
+    private static String __name = "Player1";
+    private static int __speed = 10;
     /**
      * Loads the settings.ini at initialization, if exists, otherwise use the initial parameters
      */
     static {
         try {
-            InputStream f = Settings.class.getResourceAsStream("/settings.ini");
+            InputStream f = Settings.class.getResourceAsStream("./settings.ini");
             if(f!=null)
                 readSettings(f);
                 //internal variables have their values already assigned, so only the new ones from the ini gets overriden
@@ -77,6 +76,37 @@ public class Settings {
      */
     public static int getSeed() {
         return __seed;
+    }
+
+    /**
+     * Set the speed of logic update time
+     * @param s
+     */
+    public static void setSpeed(int s) {
+        __speed = s;
+    }
+
+    /** 
+     * Get the speed of logic update time
+     */
+    public static int getSpeed() {
+        return __speed;
+    }
+
+    /**
+     * Set the name of the player for high score
+     * @param s
+     */
+
+    public static void setName(String n) {
+        __name = n;
+    }
+
+    /** 
+     * Get the name of the player for high score
+     */
+    public static String getName() {
+        return __name;
     }
 
     /**
