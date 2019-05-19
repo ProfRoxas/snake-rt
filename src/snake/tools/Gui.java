@@ -108,6 +108,7 @@ public class Gui extends JPanel {
                 }
             }
         }
+        repaint();
     }
 }
 
